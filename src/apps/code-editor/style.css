@@ -1,0 +1,302 @@
+/* ═══════════════════════════════════════════
+   MUBIX OS — Mubix Developer Studio (REAL)
+   ═══════════════════════════════════════════ */
+
+.editor-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-primary);
+  font-family: var(--mx-font-sans);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+/* Toolbar Actions */
+.editor-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--mx-space-sm);
+  padding: var(--mx-space-sm) var(--mx-space-md);
+  border-bottom: 2px solid var(--text-primary);
+  background: var(--bg-secondary);
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.editor-btn {
+  font-size: var(--mx-text-xs);
+  font-weight: var(--mx-weight-bold);
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: var(--bg-primary);
+  border: 2px solid var(--text-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  box-shadow: 2px 2px 0px var(--text-primary);
+  transition: all var(--mx-duration-fast) var(--mx-ease-default);
+  white-space: nowrap;
+}
+
+.editor-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--text-primary);
+}
+
+.editor-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px var(--text-primary);
+}
+
+.editor-btn-accent {
+  background: var(--mx-yellow, #fbbf24);
+}
+
+/* Main Studio Layout */
+.editor-main {
+  display: flex;
+  flex: 1;
+  height: calc(100% - 48px);
+  overflow: hidden;
+}
+
+/* Left Sidebar Workspace Tree */
+.editor-sidebar {
+  width: 180px;
+  border-right: 2px solid var(--text-primary);
+  background: var(--bg-secondary);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.sidebar-header {
+  padding: var(--mx-space-sm) var(--mx-space-md);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 800;
+  color: var(--text-secondary);
+  border-bottom: 2px solid var(--text-primary);
+}
+
+.editor-sidebar-tree {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--mx-space-sm) 0;
+}
+
+.tree-node {
+  display: flex;
+  flex-direction: column;
+}
+
+.tree-label {
+  display: flex;
+  align-items: center;
+  gap: var(--mx-space-xs);
+  padding: 6px var(--mx-space-md);
+  cursor: pointer;
+  font-size: var(--mx-text-xs);
+  color: var(--text-primary);
+  font-weight: var(--mx-weight-medium);
+  transition: all var(--mx-duration-fast);
+}
+
+.tree-label:hover {
+  background: rgba(139, 92, 246, 0.08);
+}
+
+.tree-icon {
+  font-size: 11px;
+}
+
+.tree-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tree-subnodes {
+  padding-left: var(--mx-space-md);
+}
+
+/* Tab Layout Workspace */
+.editor-workspace-area {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  border-right: 2px solid var(--text-primary);
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
+.editor-tabs-bar {
+  height: 34px;
+  background: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid var(--text-primary);
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+
+.editor-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 var(--mx-space-md);
+  height: 100%;
+  border-right: 2px solid var(--text-primary);
+  font-size: var(--mx-text-xs);
+  font-weight: var(--mx-weight-bold);
+  color: var(--text-secondary);
+  cursor: pointer;
+  background: transparent;
+  transition: all var(--mx-duration-fast);
+}
+
+.editor-tab.active {
+  background: var(--bg-primary);
+  color: var(--accent);
+  border-bottom: 2px solid var(--bg-primary);
+}
+
+.tab-dirty {
+  font-size: 8px;
+  color: var(--accent);
+}
+
+.tab-close {
+  font-size: var(--mx-text-xs);
+  padding: 1px 4px;
+  border-radius: var(--mx-radius-xs);
+}
+
+.tab-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--mx-red);
+}
+
+/* Code Gutter & Gutter Numbers */
+.editor-body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  background: #0d0c11;
+}
+
+.editor-gutter {
+  width: 40px;
+  background: rgba(10, 9, 14, 0.6);
+  border-right: 2px solid var(--text-primary);
+  padding: var(--mx-space-md) 0;
+  text-align: right;
+  padding-right: var(--mx-space-xs);
+  color: var(--text-secondary);
+  font-family: var(--mx-font-mono);
+  font-size: 11px;
+  line-height: 1.5;
+  user-select: none;
+  overflow-y: hidden;
+}
+
+.editor-textarea {
+  flex: 1;
+  background: transparent;
+  border: none;
+  resize: none;
+  outline: none;
+  padding: var(--mx-space-md);
+  color: #c9d1d9;
+  font-family: var(--mx-font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  tab-size: 2;
+  overflow-y: auto;
+}
+
+/* Split Panel Output Terminal */
+.editor-terminal {
+  height: 120px;
+  border-top: 2px solid var(--text-primary);
+  background: #08070b;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.editor-term-header {
+  padding: 6px var(--mx-space-md);
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--text-primary);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+}
+
+.editor-term-logs {
+  flex: 1;
+  padding: var(--mx-space-sm) var(--mx-space-md);
+  font-family: var(--mx-font-mono);
+  font-size: 11px;
+  overflow-y: auto;
+  color: #a5d6ff;
+  line-height: 1.4;
+}
+
+.log-line {
+  margin-bottom: 2px;
+  white-space: pre-wrap;
+}
+
+.log-line-error {
+  color: var(--mx-red);
+  margin-bottom: 2px;
+  white-space: pre-wrap;
+}
+
+/* Right Split Live Preview Panel */
+.editor-preview-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #ffffff;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.editor-preview-header {
+  padding: var(--mx-space-sm) var(--mx-space-md);
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--text-primary);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-secondary);
+}
+
+.editor-preview-address {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: var(--bg-primary);
+  border-bottom: 2px solid var(--text-primary);
+  font-family: var(--mx-font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.editor-preview-iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background: #ffffff;
+}

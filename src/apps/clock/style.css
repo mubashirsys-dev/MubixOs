@@ -1,0 +1,50 @@
+/* MUBIX OS — Clock App Styles */
+
+.clock-app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--mx-bg-secondary);
+  font-family: var(--mx-font-sans);
+  color: var(--mx-text-primary);
+  padding: var(--mx-space-md);
+  box-sizing: border-box;
+}
+
+.clock-body-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--mx-radius-lg);
+  border: 1px solid var(--mx-surface-border);
+  margin-bottom: var(--mx-space-md);
+  padding: var(--mx-space-lg);
+}
+
+.clock-time-display {
+  font-size: 2.2rem;
+  font-weight: 700;
+  font-family: var(--mx-font-mono);
+  color: var(--mx-accent);
+  text-shadow: 0 0 12px var(--mx-accent-glow);
+  letter-spacing: 0.05em;
+  margin-bottom: var(--mx-space-sm);
+}
+
+.clock-date-display {
+  font-size: var(--mx-text-sm);
+  color: var(--mx-text-secondary);
+  text-align: center;
+}
+
+.clock-settings-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mx-space-sm);
+  background: rgba(255, 255, 255, 0.01);
+  padding: var(--mx-space-sm);
+  border-radius: var(--mx-radius-md);
+}

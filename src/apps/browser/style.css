@@ -1,0 +1,50 @@
+/* MUBIX OS — Browser App Styles */
+.browser-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--mx-bg-secondary);
+}
+
+.browser-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--mx-space-sm);
+  padding: var(--mx-space-sm) var(--mx-space-md);
+  border-bottom: 1px solid var(--mx-surface-border);
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.browser-nav-btn {
+  font-size: var(--mx-text-sm);
+  padding: 4px;
+  cursor: pointer;
+}
+
+.browser-nav-btn:hover {
+  transform: scale(1.1);
+}
+
+.browser-url-input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--mx-surface-border);
+  border-radius: var(--mx-radius-full);
+  padding: 4px var(--mx-space-lg);
+  font-size: var(--mx-text-xs);
+  color: var(--mx-text-primary);
+  transition: all var(--mx-duration-fast);
+}
+
+.browser-url-input:focus {
+  border-color: var(--mx-accent);
+  box-shadow: 0 0 8px var(--mx-accent-glow);
+}
+
+.browser-viewport {
+  flex: 1;
+  background: #fff;
+  border: none;
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,120 @@
+/* ═══════════════════════════════════════════════════════
+   MUBIX OS — LiquidLite Design Engine
+   Fake expensive glass effects cheaply.
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Base Geometric Panel ── */
+.ll-panel {
+  position: relative;
+  background: var(--bg-secondary);
+  border: 2px solid var(--text-primary);
+  border-radius: var(--mx-radius-lg);
+  overflow: hidden;
+}
+
+/* ── Surface — subtler than panel ── */
+.ll-surface {
+  background: var(--bg-secondary);
+  border: 2px solid var(--text-primary);
+  border-radius: var(--mx-radius-md);
+}
+
+/* ── Window Glass ── */
+.ll-window {
+  position: relative;
+  background: var(--window-bg);
+  border: 2px solid var(--text-primary);
+  border-radius: var(--mx-radius-lg);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+/* ── Dock Panel ── */
+.ll-dock {
+  background: var(--dock-bg);
+  border: 2px solid var(--text-primary);
+  border-radius: var(--mx-radius-lg);
+  box-shadow: 4px 4px 0px var(--text-primary);
+  position: relative;
+  overflow: visible;
+}
+
+/* ── Launcher Overlay Panel ── */
+.ll-launcher {
+  background: var(--bg-secondary);
+  border: 2px solid var(--text-primary);
+  border-radius: var(--mx-radius-lg);
+  box-shadow: 6px 6px 0px var(--text-primary);
+  position: relative;
+}
+
+/* ── Notification Panel ── */
+.ll-notification {
+  background: var(--bg-secondary);
+  border: 2px solid var(--text-primary);
+  border-radius: var(--mx-radius-md);
+  box-shadow: 4px 4px 0px var(--text-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Context Menu Panel ── */
+.ll-menu {
+  background: var(--bg-secondary);
+  border: 2px solid var(--text-primary);
+  border-radius: var(--mx-radius-md);
+  box-shadow: 4px 4px 0px var(--text-primary);
+  overflow: hidden;
+}
+
+/* ── Interactive Hover States ── */
+.ll-hover {
+  transition: background var(--mx-duration-fast) var(--mx-ease-default);
+}
+.ll-hover:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+.ll-hover:active {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+/* ── Glow Effects ── */
+.ll-glow-accent {
+  box-shadow: 0 0 20px rgba(96, 165, 250, 0.12), 0 0 4px rgba(96, 165, 250, 0.08);
+}
+
+.ll-glow-subtle {
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.04);
+}
+
+/* ── Tier 1 Overrides — strip ALL effects ── */
+html[data-perf-tier="1"] .ll-panel,
+html[data-perf-tier="1"] .ll-surface {
+  background: var(--mx-bg-secondary);
+  border-color: rgba(255,255,255,0.06);
+}
+
+html[data-perf-tier="1"] .ll-panel::before,
+html[data-perf-tier="1"] .ll-window::before,
+html[data-perf-tier="1"] .ll-window::after,
+html[data-perf-tier="1"] .ll-dock::before,
+html[data-perf-tier="1"] .ll-notification::before,
+html[data-perf-tier="1"] .ll-menu::before {
+  display: none;
+}
+
+html[data-perf-tier="1"] .ll-window {
+  background: var(--mx-bg-secondary);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+html[data-perf-tier="1"] .ll-dock {
+  background: var(--mx-bg-secondary);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+html[data-perf-tier="1"] .ll-glow-accent,
+html[data-perf-tier="1"] .ll-glow-subtle {
+  box-shadow: none;
+}

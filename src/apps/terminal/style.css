@@ -1,0 +1,129 @@
+/* ═══════════════════════════════════════════
+   MUBIX OS — Terminal App Retro Developer Style
+   ═══════════════════════════════════════════ */
+
+.term-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--bg-primary);
+  background-image: radial-gradient(rgba(139, 92, 246, 0.12) 1px, transparent 1px);
+  background-size: 16px 16px;
+  color: var(--text-primary);
+  font-family: var(--mx-font-mono);
+  font-size: var(--mx-text-sm);
+  padding: var(--mx-space-md);
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Outlined Content Panel wrapper */
+.term-inner-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 2px solid var(--text-primary);
+  border-radius: var(--mx-radius-md);
+  background: var(--bg-secondary);
+  padding: var(--mx-space-md);
+  box-shadow: var(--shadow-soft, 5px 5px 0px var(--text-primary));
+  overflow: hidden;
+  transition: all var(--mx-duration-fast) var(--mx-ease-default);
+}
+
+.term-container:focus-within .term-inner-panel {
+  border-color: var(--accent, #8B5CF6);
+  box-shadow: 5px 5px 0px var(--accent, #8B5CF6);
+}
+
+.term-output {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: var(--mx-space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  scroll-behavior: smooth;
+  padding-right: var(--mx-space-xs);
+}
+
+/* Custom Scrollbar for Term */
+.term-output::-webkit-scrollbar {
+  width: 6px;
+}
+.term-output::-webkit-scrollbar-track {
+  background: transparent;
+}
+.term-output::-webkit-scrollbar-thumb {
+  background: var(--text-primary);
+  border-radius: var(--mx-radius-full);
+}
+.term-output::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Syntax Colored Lines */
+.term-line {
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-all;
+  opacity: 0.95;
+  transition: opacity var(--mx-duration-fast) var(--mx-ease-default);
+}
+
+.term-line.sys { color: var(--accent, #8B5CF6); font-weight: bold; } /* Mubix Violet */
+.term-line.err { color: var(--accent-coral, var(--mx-red, #FF6B6B)); } /* Mubix Coral */
+.term-line.warn { color: var(--accent-yellow, var(--mx-yellow, #FBBF24)); } /* Mubix Amber */
+.term-line.cmd { color: var(--mx-green, #10B981); } /* Emerald */
+.term-line.success { color: var(--mx-green, #10B981); }
+
+.term-prompt-line {
+  display: flex;
+  align-items: center;
+  gap: var(--mx-space-xs);
+  margin-top: var(--mx-space-xs);
+}
+
+.term-prompt {
+  font-weight: 700;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.term-user {
+  color: var(--accent-coral, #FF6B6B); /* Mubix Coral */
+}
+
+.term-sep {
+  color: var(--accent, #8B5CF6); /* Mubix Violet */
+  margin: 0 2px;
+}
+
+.term-path {
+  color: var(--accent-yellow, #FBBF24); /* Mubix Yellow path */
+}
+
+.term-char {
+  color: var(--text-primary);
+  margin-left: 4px;
+}
+
+.term-cmd-text {
+  color: var(--mx-green, #10B981); /* Mubix Emerald cmd content */
+  font-weight: bold;
+}
+
+.term-input {
+  flex: 1;
+  color: var(--text-primary);
+  font-family: var(--mx-font-mono);
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  font-size: var(--mx-text-sm);
+  caret-color: var(--accent, #8B5CF6);
+  padding: 0;
+  margin: 0;
+}

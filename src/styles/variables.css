@@ -1,0 +1,216 @@
+/* MUBIX OS — Design Tokens */
+:root {
+  /* ── CORE MUBIX BRAND VISUAL SYSTEM DESIGN TOKENS ── */
+  --bg-primary: #0a090e;
+  --bg-secondary: #131219;
+  --text-primary: #e8e8ed;
+  --text-secondary: rgba(232, 232, 237, 0.7);
+  --accent: #8B5CF6; /* Mubix Purple */
+  --accent-coral: #FF6B6B; /* Mubix Coral */
+  --accent-yellow: #FBBF24; /* Mubix Yellow */
+  --window-bg: #131219;
+  --window-border: #8B5CF6;
+  --dock-bg: rgba(19, 18, 25, 0.85);
+  --shadow-soft: 5px 5px 0px rgba(0, 0, 0, 0.9);
+  --glass-opacity: 0.95;
+  --grid-visible: 1;
+  --motion-scale: 1;
+
+  /* ── Color System ── */
+  --mx-bg-primary: var(--bg-primary);
+  --mx-bg-secondary: var(--bg-secondary);
+  --mx-bg-tertiary: var(--bg-secondary);
+  --mx-bg-elevated: var(--bg-secondary);
+
+  --mx-surface: rgba(255, 255, 255, 0.03);
+  --mx-surface-hover: rgba(255, 255, 255, 0.05);
+  --mx-surface-active: rgba(255, 255, 255, 0.08);
+  --mx-surface-border: var(--window-border);
+
+  --mx-text-primary: var(--text-primary);
+  --mx-text-secondary: var(--text-secondary);
+  --mx-text-tertiary: rgba(232, 232, 237, 0.4);
+  --mx-text-disabled: rgba(232, 232, 237, 0.2);
+
+  /* Accent palette */
+  --mx-accent: var(--accent);
+  --mx-accent-hover: #9f7aea;
+  --mx-accent-glow: rgba(139, 92, 246, 0.2);
+  --mx-accent-subtle: rgba(139, 92, 246, 0.08);
+
+  --mx-purple: #8B5CF6;
+  --mx-purple-glow: rgba(139, 92, 246, 0.2);
+
+  --mx-green: #10B981;
+  --mx-red: #FF6B6B;
+  --mx-yellow: #FBBF24;
+  --mx-orange: #f59e0b;
+
+  /* ── Spacing ── */
+  --mx-space-xs: 4px;
+  --mx-space-sm: 8px;
+  --mx-space-md: 12px;
+  --mx-space-lg: 16px;
+  --mx-space-xl: 24px;
+  --mx-space-2xl: 32px;
+  --mx-space-3xl: 48px;
+
+  /* ── Radius ── */
+  --mx-radius-sm: 6px;
+  --mx-radius-md: 10px;
+  --mx-radius-lg: 14px;
+  --mx-radius-xl: 18px;
+  --mx-radius-full: 9999px;
+
+  /* ── Shadows (cached, not animated) ── */
+  --mx-shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+  --mx-shadow-md: 0 4px 16px rgba(0,0,0,0.5);
+  --mx-shadow-lg: 0 8px 32px rgba(0,0,0,0.6);
+  --mx-shadow-glow: 0 0 20px var(--mx-accent-glow);
+  --mx-shadow-window: 0 8px 40px rgba(0,0,0,0.5), 0 0 1px rgba(255,255,255,0.1);
+
+  /* ── Typography ── */
+  --mx-font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mx-font-mono: 'SF Mono', 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+
+  --mx-text-xs: 0.7rem;
+  --mx-text-sm: 0.8rem;
+  --mx-text-base: 0.875rem;
+  --mx-text-md: 1rem;
+  --mx-text-lg: 1.125rem;
+  --mx-text-xl: 1.5rem;
+  --mx-text-2xl: 2rem;
+
+  --mx-weight-light: 300;
+  --mx-weight-normal: 400;
+  --mx-weight-medium: 500;
+  --mx-weight-semibold: 600;
+  --mx-weight-bold: 700;
+
+  /* ── Motion ── */
+  --mx-duration-instant: 0ms;
+  --mx-duration-fast: 100ms;
+  --mx-duration-normal: 150ms;
+  --mx-duration-smooth: 200ms;
+  --mx-duration-slow: 300ms;
+  --mx-duration-lazy: 500ms;
+
+  --mx-ease-default: cubic-bezier(0.2, 0, 0, 1);
+  --mx-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --mx-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --mx-ease-in: cubic-bezier(0.4, 0, 1, 1);
+
+  /* ── Z-Index Scale ── */
+  --mx-z-desktop: 0;
+  --mx-z-window: 100;
+  --mx-z-dock: 500;
+  --mx-z-launcher: 600;
+  --mx-z-notification: 700;
+  --mx-z-context-menu: 800;
+  --mx-z-modal: 900;
+  --mx-z-boot: 9999;
+
+  /* ── Window ── */
+  --mx-window-titlebar-h: 36px;
+  --mx-window-min-w: 320px;
+  --mx-window-min-h: 240px;
+
+  /* ── Dock ── */
+  --mx-dock-h: 56px;
+  --mx-dock-icon-size: 40px;
+  --mx-dock-magnify: 1.35;
+  --mx-dock-gap: 6px;
+}
+
+/* ── Performance Tier Overrides ── */
+
+/* Tier 1 — Ultra Low: No effects */
+html[data-perf-tier="1"] {
+  --mx-duration-fast: 0ms;
+  --mx-duration-normal: 0ms;
+  --mx-duration-smooth: 50ms;
+  --mx-duration-slow: 100ms;
+  --mx-duration-lazy: 200ms;
+  --mx-shadow-md: none;
+  --mx-shadow-lg: none;
+  --mx-shadow-window: 0 2px 8px rgba(0,0,0,0.5);
+  --mx-dock-magnify: 1;
+}
+
+/* Tier 2 — Low: Reduced effects */
+html[data-perf-tier="2"] {
+  --mx-duration-smooth: 150ms;
+  --mx-duration-slow: 200ms;
+  --mx-shadow-lg: 0 4px 16px rgba(0,0,0,0.5);
+  --mx-shadow-window: 0 4px 20px rgba(0,0,0,0.5);
+  --mx-dock-magnify: 1.15;
+}
+
+/* ── Light Mode Token Overrides ── */
+html[data-theme="light"] {
+  --bg-primary: #F8F5EE;
+  --bg-secondary: #F0ede5;
+  --text-primary: #111111;
+  --text-secondary: #3a3a3a;
+  --accent: #8B5CF6;
+  --accent-coral: #FF6B6B;
+  --accent-yellow: #FBBF24;
+  --window-bg: #F0ede5;
+  --window-border: #111111;
+  --dock-bg: rgba(248, 245, 238, 0.95);
+  --shadow-soft: 5px 5px 0px #111111;
+  --glass-opacity: 0.95;
+
+  --mx-bg-tertiary: #E8E5DD;
+  --mx-bg-elevated: #F0ede5;
+
+  --mx-surface: rgba(0, 0, 0, 0.04);
+  --mx-surface-hover: rgba(0, 0, 0, 0.06);
+  --mx-surface-active: rgba(0, 0, 0, 0.08);
+
+  --mx-text-tertiary: rgba(17, 17, 17, 0.5);
+  --mx-text-disabled: rgba(17, 17, 17, 0.3);
+
+  --mx-accent-hover: #7c3aed;
+  --mx-accent-glow: rgba(139, 92, 246, 0.15);
+  --mx-accent-subtle: rgba(139, 92, 246, 0.06);
+
+  --mx-shadow-window: var(--shadow-soft);
+}
+
+/* Enforce adaptive glass colors for Light Mode */
+html[data-theme="light"] .mx-window,
+html[data-theme="light"] .ll-window {
+  background: var(--window-bg);
+  border: 2px solid var(--window-border);
+  box-shadow: var(--shadow-soft);
+}
+
+html[data-theme="light"] .mx-dock,
+html[data-theme="light"] .ll-dock {
+  background: var(--dock-bg);
+  border: 2px solid var(--window-border);
+  box-shadow: 4px 4px 0px var(--window-border);
+}
+
+html[data-theme="light"] .dock-icon {
+  background: #F8F5EE;
+  border: 2px solid var(--window-border);
+  color: #111111;
+  box-shadow: 2px 2px 0px var(--window-border);
+}
+
+html[data-theme="light"] .dock-separator {
+  background: var(--window-border);
+  width: 2px;
+}
+
+html[data-theme="light"] .dock-clock-time {
+  color: #111111;
+  font-weight: 700;
+}
+
+html[data-theme="light"] .dock-clock-date {
+  color: rgba(17, 17, 17, 0.6);
+}
+

@@ -1,0 +1,38 @@
+/* MUBIX OS — Typography System */
+
+/* Inter font — loaded as subset, woff2 only for smallest size */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+body {
+  font-family: var(--mx-font-sans);
+  font-size: var(--mx-text-base);
+  font-weight: var(--mx-weight-normal);
+  line-height: 1.5;
+  color: var(--mx-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.text-xs { font-size: var(--mx-text-xs); }
+.text-sm { font-size: var(--mx-text-sm); }
+.text-base { font-size: var(--mx-text-base); }
+.text-md { font-size: var(--mx-text-md); }
+.text-lg { font-size: var(--mx-text-lg); }
+.text-xl { font-size: var(--mx-text-xl); }
+.text-2xl { font-size: var(--mx-text-2xl); }
+
+.text-secondary { color: var(--mx-text-secondary); }
+.text-tertiary { color: var(--mx-text-tertiary); }
+.text-accent { color: var(--mx-accent); }
+.text-mono { font-family: var(--mx-font-mono); }
+.text-medium { font-weight: var(--mx-weight-medium); }
+.text-semibold { font-weight: var(--mx-weight-semibold); }
+.text-bold { font-weight: var(--mx-weight-bold); }
+
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

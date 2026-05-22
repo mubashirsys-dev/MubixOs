@@ -1,0 +1,220 @@
+/* MUBIX OS — Desktop Styles */
+
+#desktop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: var(--mx-z-desktop);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ── Wallpaper Layer ── */
+#wallpaper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.wallpaper-mesh {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-primary);
+  background-image: radial-gradient(var(--text-primary) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+  will-change: opacity;
+  transition: background-color var(--mx-duration-slow) var(--mx-ease-default);
+}
+
+/* Grid overlay visibility state toggle */
+html[data-grid-visible="false"] .wallpaper-mesh {
+  background-image: none !important;
+}
+
+/* Floating Shapes styling */
+.mubix-shape {
+  position: absolute;
+  border: 2px solid var(--text-primary);
+  opacity: 0.15;
+  will-change: transform;
+}
+
+.shape-circle {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  top: 15%;
+  left: 10%;
+  animation: float-circle 35s ease-in-out infinite alternate;
+}
+
+.shape-square {
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  bottom: 20%;
+  right: 15%;
+  transform: rotate(45deg);
+  animation: float-square 45s ease-in-out infinite alternate;
+}
+
+.shape-triangle {
+  width: 0;
+  height: 0;
+  border-left: 70px solid transparent;
+  border-right: 70px solid transparent;
+  border-bottom: 120px solid var(--text-primary);
+  background: none !important;
+  border-top: none !important;
+  opacity: 0.08;
+  top: 40%;
+  right: 40%;
+  animation: float-triangle 55s ease-in-out infinite alternate;
+}
+
+/* Circuit Lines styling */
+.mubix-circuit {
+  position: absolute;
+  border: 1px dashed var(--text-primary);
+  opacity: 0.12;
+}
+
+.circuit-1 {
+  width: 300px;
+  height: 2px;
+  top: 30%;
+  left: 20%;
+  transform: rotate(30deg);
+}
+
+.circuit-1::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 2px solid var(--text-primary);
+  background: var(--bg-primary);
+  border-radius: 50%;
+  top: -5px;
+  right: -4px;
+}
+
+.circuit-2 {
+  width: 250px;
+  height: 2px;
+  bottom: 35%;
+  right: 25%;
+  transform: rotate(-45deg);
+}
+
+.circuit-2::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 2px solid var(--text-primary);
+  background: var(--bg-primary);
+  border-radius: 50%;
+  top: -5px;
+  left: -4px;
+}
+
+/* Tier 1 Saver Performance Controls */
+html[data-perf-tier="1"] .mubix-shape,
+html[data-perf-tier="1"] .mubix-circuit {
+  animation: none !important;
+  display: none !important;
+}
+
+/* Dynamic Performance and Motion scaling */
+html[data-motion-scale="0.5"] .mubix-shape {
+  animation-duration: 90s !important;
+}
+html[data-motion-scale="0"] .mubix-shape {
+  animation: none !important;
+}
+
+@keyframes float-circle {
+  0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+  100% { transform: translate3d(40px, -30px, 0) scale(1.05) rotate(360deg); }
+}
+
+@keyframes float-square {
+  0% { transform: translate3d(0, 0, 0) rotate(45deg); }
+  100% { transform: translate3d(-30px, 40px, 0) rotate(225deg); }
+}
+
+@keyframes float-triangle {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg) scale(0.9); }
+  100% { transform: translate3d(20px, 20px, 0) rotate(-180deg) scale(1); }
+}
+
+/* ── Desktop Content Layer ── */
+#desktop-content {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* ── Desktop Icons ── */
+.desktop-icons {
+  position: absolute;
+  top: var(--mx-space-lg);
+  left: var(--mx-space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--mx-space-sm);
+}
+
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--mx-space-xs);
+  padding: var(--mx-space-sm);
+  border-radius: var(--mx-radius-md);
+  cursor: pointer;
+  width: 76px;
+  transition: background var(--mx-duration-fast) var(--mx-ease-default);
+}
+
+.desktop-icon:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.desktop-icon:active {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.desktop-icon .icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.desktop-icon .label {
+  font-size: var(--mx-text-xs);
+  color: var(--mx-text-primary);
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+/* ── Window Container ── */
+#window-layer {
+  position: absolute;
+  inset: 0;
+  z-index: var(--mx-z-window);
+  pointer-events: none;
+}
+
+#window-layer > * {
+  pointer-events: auto;
+}

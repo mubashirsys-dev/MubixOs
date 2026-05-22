@@ -1,0 +1,115 @@
+/* MUBIX OS — App Launcher Styles */
+
+#launcher-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--mx-z-launcher);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10vh;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--mx-duration-smooth) var(--mx-ease-default),
+    visibility var(--mx-duration-smooth);
+}
+
+#launcher-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ── Search Bar ── */
+.launcher-search {
+  width: 420px;
+  max-width: 90vw;
+  margin-bottom: var(--mx-space-2xl);
+}
+
+.launcher-search-input {
+  width: 100%;
+  padding: var(--mx-space-md) var(--mx-space-xl);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--mx-radius-full);
+  font-size: var(--mx-text-md);
+  color: var(--mx-text-primary);
+  transition: border-color var(--mx-duration-fast) var(--mx-ease-default),
+              box-shadow var(--mx-duration-fast) var(--mx-ease-default);
+}
+
+.launcher-search-input::placeholder {
+  color: var(--mx-text-tertiary);
+}
+
+.launcher-search-input:focus {
+  border-color: rgba(96, 165, 250, 0.3);
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.08);
+}
+
+/* ── App Grid ── */
+.launcher-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 96px);
+  gap: var(--mx-space-lg);
+  justify-content: center;
+  max-width: 640px;
+  width: 90vw;
+  max-height: 55vh;
+  overflow-y: auto;
+  padding: var(--mx-space-md);
+}
+
+/* ── App Card ── */
+.launcher-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--mx-space-sm);
+  padding: var(--mx-space-md);
+  border-radius: var(--mx-radius-md);
+  cursor: pointer;
+  transition: background var(--mx-duration-fast) var(--mx-ease-default),
+              transform var(--mx-duration-fast) var(--mx-ease-spring);
+}
+
+.launcher-app:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: scale(1.05);
+}
+
+.launcher-app:active {
+  transform: scale(0.95);
+}
+
+.launcher-app-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--mx-radius-md);
+  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.06);
+  font-size: 1.5rem;
+}
+
+.launcher-app-name {
+  font-size: var(--mx-text-xs);
+  color: var(--mx-text-secondary);
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* ── Category Label ── */
+.launcher-category {
+  width: 90vw;
+  max-width: 640px;
+  padding: var(--mx-space-sm) var(--mx-space-md);
+  font-size: var(--mx-text-xs);
+  font-weight: var(--mx-weight-semibold);
+  color: var(--mx-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}

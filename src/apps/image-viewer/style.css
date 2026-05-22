@@ -1,0 +1,255 @@
+/* ═══════════════════════════════════════════
+   MUBIX OS — Photos App Brand Styles
+   ═══════════════════════════════════════════ */
+
+.photo-app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-primary);
+  font-family: var(--mx-font-sans);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+/* Toolbar Panel */
+.photo-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--mx-space-sm);
+  padding: var(--mx-space-sm) var(--mx-space-md);
+  border-bottom: 2px solid var(--text-primary);
+  background: var(--bg-secondary);
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.photo-btn {
+  font-size: var(--mx-text-xs);
+  font-weight: var(--mx-weight-bold);
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: var(--bg-primary);
+  border: 2px solid var(--text-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  box-shadow: 2px 2px 0px var(--text-primary);
+  transition: all var(--mx-duration-fast) var(--mx-ease-default);
+  white-space: nowrap;
+}
+
+.photo-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--text-primary);
+}
+
+.photo-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px var(--text-primary);
+}
+
+.photo-btn-accent {
+  background: var(--mx-yellow, #fbbf24);
+}
+
+/* ── Gallery Grid View ── */
+.photo-grid-view {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  grid-gap: var(--mx-space-md);
+  padding: var(--mx-space-md);
+  overflow-y: auto;
+  align-content: start;
+}
+
+.photo-empty-state {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 180px;
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-secondary);
+  border: 2px dashed rgba(17, 17, 17, 0.25);
+  border-radius: var(--mx-radius-md);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Geometric Card Details */
+.photo-card {
+  background: var(--bg-secondary);
+  border: 2px solid var(--text-primary);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 3px 3px 0px var(--text-primary);
+  transition: all var(--mx-duration-fast) var(--mx-ease-default);
+}
+
+.photo-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px var(--text-primary);
+}
+
+.photo-card-thumb {
+  height: 110px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: var(--bg-primary);
+  border-bottom: 2px solid var(--text-primary);
+}
+
+.photo-card-label {
+  padding: var(--mx-space-xs) var(--mx-space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--bg-secondary);
+}
+
+.photo-card-title {
+  font-size: var(--mx-text-xs);
+  font-weight: var(--mx-weight-bold);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-primary);
+}
+
+.photo-card-size {
+  font-size: 10px;
+  font-weight: var(--mx-weight-medium);
+  color: var(--text-secondary);
+}
+
+/* ── Photo Viewer View ── */
+.photo-viewer-view {
+  flex: 1;
+  display: flex;
+  height: calc(100% - 48px);
+  overflow: hidden;
+}
+
+.photo-viewport {
+  flex: 1;
+  position: relative;
+  background: rgba(10, 9, 14, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--mx-space-md);
+  overflow: hidden;
+}
+
+.photo-main-img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border: 2px solid var(--text-primary);
+  border-radius: var(--mx-radius-sm);
+  background: var(--bg-primary);
+  box-shadow: 5px 5px 0px var(--text-primary);
+  transition: transform 0.2s ease-out;
+}
+
+/* Nav Toggles */
+.photo-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--bg-secondary);
+  border: 2px solid var(--text-primary);
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 2px 2px 0px var(--text-primary);
+  transition: all var(--mx-duration-fast) var(--mx-ease-default);
+  z-index: 10;
+}
+
+.photo-nav-arrow:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translateY(-50%) translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--text-primary);
+}
+
+.arrow-left {
+  left: var(--mx-space-md);
+}
+
+.arrow-right {
+  right: var(--mx-space-md);
+}
+
+/* Metadata Sidebar Panel */
+.photo-details-sidebar {
+  width: 200px;
+  border-left: 2px solid var(--text-primary);
+  background: var(--bg-secondary);
+  display: flex;
+  flex-direction: column;
+  padding: var(--mx-space-md);
+  gap: var(--mx-space-md);
+  flex-shrink: 0;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.photo-meta-title {
+  font-size: var(--mx-text-sm);
+  font-weight: var(--mx-weight-bold);
+  word-break: break-all;
+  margin-bottom: var(--mx-space-xs);
+  border-bottom: 2px solid var(--text-primary);
+  padding-bottom: 6px;
+}
+
+.photo-meta-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mx-space-sm);
+}
+
+.photo-meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.meta-label {
+  font-size: 10px;
+  font-weight: var(--mx-weight-bold);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.meta-val {
+  font-size: var(--mx-text-xs);
+  color: var(--text-primary);
+  font-family: var(--mx-font-mono);
+  word-break: break-all;
+}
+
+.photo-action-panel {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mx-space-sm);
+}

@@ -1,0 +1,281 @@
+/* MUBIX OS — Media Player App Styles */
+
+.media-app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--mx-bg-secondary);
+  font-family: var(--mx-font-sans);
+  color: var(--mx-text-primary);
+  overflow: hidden;
+}
+
+/* ── Drag & Drop Uploader ── */
+.media-drop-zone {
+  margin: var(--mx-space-sm) var(--mx-space-md) 0 var(--mx-space-md);
+  border: 1px dashed var(--mx-surface-border);
+  border-radius: var(--mx-radius-md);
+  padding: var(--mx-space-sm);
+  text-align: center;
+  font-size: var(--mx-text-xs);
+  color: var(--mx-text-secondary);
+  cursor: pointer;
+  transition: all var(--mx-duration-fast) var(--mx-ease-default);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.media-drop-zone.hover {
+  background: rgba(96, 165, 250, 0.05);
+  border-color: var(--mx-accent);
+  color: var(--mx-accent);
+}
+
+/* ── Main Workspace ── */
+.media-workspace {
+  display: flex;
+  flex: 1;
+  height: calc(100% - 48px);
+  overflow: hidden;
+}
+
+/* ── Playlist Sidebar ── */
+.media-playlist {
+  width: 200px;
+  border-right: 1px solid var(--mx-surface-border);
+  background: rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.playlist-header {
+  padding: var(--mx-space-sm) var(--mx-space-md);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+  color: var(--mx-text-secondary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.playlist-item {
+  display: flex;
+  align-items: center;
+  gap: var(--mx-space-sm);
+  padding: var(--mx-space-sm) var(--mx-space-md);
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.01);
+  transition: all var(--mx-duration-fast);
+}
+
+.playlist-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.playlist-item.active {
+  background: rgba(96, 165, 250, 0.05);
+  border-left: 2px solid var(--mx-accent);
+}
+
+.item-icon {
+  font-size: var(--mx-text-sm);
+  flex-shrink: 0;
+}
+
+.item-details {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.item-title {
+  font-size: var(--mx-text-xs);
+  font-weight: 500;
+  color: var(--mx-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-artist {
+  font-size: 10px;
+  color: var(--mx-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Player deck ── */
+.media-deck {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--mx-space-lg);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.media-track-title {
+  font-size: var(--mx-text-sm);
+  font-weight: 600;
+  color: var(--mx-text-primary);
+  margin-bottom: 2px;
+  text-align: center;
+}
+
+.media-track-artist {
+  font-size: var(--mx-text-xs);
+  color: var(--mx-text-secondary);
+  margin-bottom: var(--mx-space-lg);
+  text-align: center;
+}
+
+.media-deck-center {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--mx-space-lg);
+  margin-bottom: var(--mx-space-lg);
+}
+
+/* ── Rotating vinyl ── */
+.media-vinyl {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #333 10%, #111 60%, #000 100%);
+  border: 4px solid #222;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.5s ease-out;
+}
+
+.media-vinyl-center {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--mx-accent);
+  border: 2px solid #000;
+}
+
+.media-vinyl.playing {
+  animation: vinyl-spin 5s linear infinite;
+}
+
+@keyframes vinyl-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ── Visualizer canvas ── */
+.media-visualizer {
+  width: 220px;
+  height: 48px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--mx-radius-md);
+  border: 1px solid var(--mx-surface-border);
+}
+
+/* ── Slider scrubbing ── */
+.media-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  max-width: 320px;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  outline: none;
+  margin-bottom: var(--mx-space-sm);
+  cursor: pointer;
+}
+
+.media-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--mx-accent);
+  cursor: pointer;
+  box-shadow: 0 0 8px var(--mx-accent-glow);
+  transition: transform var(--mx-duration-fast);
+}
+
+.media-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.media-time-info {
+  font-size: 10px;
+  font-family: var(--mx-font-mono);
+  color: var(--mx-text-secondary);
+  margin-bottom: var(--mx-space-lg);
+}
+
+/* ── Controls Deck buttons ── */
+.media-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--mx-space-md);
+}
+
+.media-btn {
+  background: transparent;
+  border: 1px solid var(--mx-surface-border);
+  color: var(--mx-text-secondary);
+  font-size: var(--mx-text-sm);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--mx-duration-fast);
+}
+
+.media-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--mx-text-secondary);
+  color: var(--mx-text-primary);
+  transform: scale(1.05);
+}
+
+.btn-main-play {
+  width: 90px;
+  border-radius: var(--mx-radius-full);
+  font-size: var(--mx-text-xs);
+  background: var(--mx-accent);
+  border-color: transparent;
+  color: #fff;
+  font-weight: 600;
+}
+
+.btn-main-play:hover {
+  background: var(--mx-accent-glow);
+  box-shadow: 0 0 10px var(--mx-accent-glow);
+  color: #fff;
+}
+
+/* ── Volume ── */
+.media-vol-slider {
+  -webkit-appearance: none;
+  width: 60px;
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  outline: none;
+}
+
+.media-vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mx-text-secondary);
+  cursor: pointer;
+}

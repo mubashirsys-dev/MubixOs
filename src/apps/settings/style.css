@@ -1,0 +1,170 @@
+/* MUBIX OS — Settings App Styles */
+.settings-container {
+  display: flex;
+  height: 100%;
+  background: var(--mx-bg-secondary);
+  color: var(--mx-text-primary);
+}
+
+.settings-sidebar {
+  width: 160px;
+  border-right: 1px solid var(--mx-surface-border);
+  background: rgba(0, 0, 0, 0.1);
+  padding: var(--mx-space-sm) 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--mx-space-sm);
+  padding: var(--mx-space-sm) var(--mx-space-md);
+  font-size: var(--mx-text-xs);
+  color: var(--mx-text-secondary);
+  cursor: pointer;
+  transition: all var(--mx-duration-fast);
+  text-align: left;
+}
+
+.settings-tab-btn:hover, .settings-tab-btn.active {
+  background: var(--mx-surface-hover);
+  color: var(--mx-accent);
+}
+
+.settings-tab-btn.active {
+  font-weight: var(--mx-weight-semibold);
+  border-left: 2px solid var(--mx-accent);
+}
+
+.settings-body {
+  flex: 1;
+  padding: var(--mx-space-lg);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mx-space-md);
+}
+
+.settings-section-title {
+  font-size: var(--mx-text-sm);
+  font-weight: var(--mx-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--mx-text-tertiary);
+  margin-bottom: var(--mx-space-xs);
+  border-bottom: 1px solid var(--mx-surface-border);
+  padding-bottom: 4px;
+}
+
+.settings-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--mx-space-sm) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.settings-label-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.settings-label {
+  font-size: var(--mx-text-sm);
+  font-weight: var(--mx-weight-medium);
+}
+
+.settings-desc {
+  font-size: var(--mx-text-xs);
+  color: var(--mx-text-tertiary);
+}
+
+.settings-select {
+  background: var(--mx-surface);
+  border: 1px solid var(--mx-surface-border);
+  color: var(--mx-text-primary);
+  font-size: var(--mx-text-xs);
+  padding: 4px var(--mx-space-sm);
+  border-radius: var(--mx-radius-sm);
+}
+
+.settings-select option {
+  background: var(--mx-bg-elevated);
+  color: var(--mx-text-primary);
+}
+
+.diag-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--mx-space-sm);
+  background: rgba(0, 0, 0, 0.2);
+  padding: var(--mx-space-md);
+  border-radius: var(--mx-radius-md);
+  border: 1px solid var(--mx-surface-border);
+}
+
+.diag-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.diag-val {
+  font-size: var(--mx-text-md);
+  font-weight: var(--mx-weight-bold);
+  font-family: var(--mx-font-mono);
+  color: var(--mx-accent);
+}
+
+/* Wallpaper Selection Picker Grid */
+.settings-wallpaper-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: var(--mx-space-sm);
+  margin-top: var(--mx-space-sm);
+  margin-bottom: var(--mx-space-md);
+}
+
+.wallpaper-card {
+  border: 1px solid var(--mx-surface-border);
+  border-radius: var(--mx-radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.01);
+  transition: all var(--mx-duration-fast);
+}
+
+.wallpaper-card:hover {
+  border-color: var(--mx-accent);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.wallpaper-card.active {
+  border-color: var(--mx-accent);
+  box-shadow: 0 0 10px var(--mx-accent-glow);
+  outline: 2px solid var(--mx-accent);
+}
+
+.wallpaper-card-thumb {
+  height: 60px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--mx-surface-border);
+}
+
+.wallpaper-card-label {
+  padding: 6px;
+  font-size: 10px;
+  text-align: center;
+  color: var(--mx-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

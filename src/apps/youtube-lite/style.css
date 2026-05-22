@@ -1,0 +1,409 @@
+/* MUBIX OS — YouTube Lite App Styles */
+
+.yt-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #0f0f0f;
+  font-family: var(--mx-font-sans);
+  color: #fff;
+  overflow: hidden;
+}
+
+/* ── Header ── */
+.yt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mx-space-md);
+  padding: 0 var(--mx-space-md);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: #0f0f0f;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.yt-brand {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.yt-logo {
+  font-size: var(--mx-text-md);
+}
+
+.yt-title {
+  font-size: var(--mx-text-sm);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.yt-badge {
+  font-size: 9px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--mx-text-secondary);
+  padding: 1px 4px;
+  border-radius: var(--mx-radius-xs);
+  margin-left: 2px;
+}
+
+.yt-search-input {
+  flex: 1;
+  max-width: 400px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--mx-radius-full);
+  padding: 5px 12px;
+  font-size: var(--mx-text-xs);
+  color: #fff;
+  outline: none;
+  transition: all var(--mx-duration-fast);
+}
+
+.yt-search-input:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #ff0000;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.15);
+}
+
+/* ── Main Layout ── */
+.yt-layout {
+  display: flex;
+  flex: 1;
+  height: calc(100% - 48px);
+  overflow: hidden;
+}
+
+/* ── Sidebar ── */
+.yt-sidebar {
+  width: 140px;
+  background: #0f0f0f;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  padding: var(--mx-space-sm) 0;
+  flex-shrink: 0;
+}
+
+.yt-sidebar-btn {
+  background: transparent;
+  border: none;
+  color: #aaa;
+  text-align: left;
+  padding: var(--mx-space-sm) var(--mx-space-md);
+  font-size: var(--mx-text-xs);
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+  transition: all var(--mx-duration-fast);
+}
+
+.yt-sidebar-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+/* ── Content ── */
+.yt-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--mx-space-md);
+  background: #0f0f0f;
+}
+
+/* ── Video Grid Feed ── */
+.yt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-gap: var(--mx-space-md);
+}
+
+.yt-empty-feed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #aaa;
+  font-size: var(--mx-text-xs);
+}
+
+.yt-card {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform var(--mx-duration-fast);
+}
+
+.yt-card:hover {
+  transform: translateY(-2px);
+}
+
+.yt-card-thumb {
+  position: relative;
+  aspect-ratio: 16/9;
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--mx-radius-md);
+  overflow: hidden;
+  background-color: rgba(255,255,255,0.02);
+}
+
+.yt-duration {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  background: rgba(0, 0, 0, 0.8);
+  font-size: 9px;
+  padding: 1px 4px;
+  border-radius: var(--mx-radius-xs);
+  font-family: var(--mx-font-mono);
+}
+
+.yt-card-label {
+  display: flex;
+  gap: var(--mx-space-sm);
+  margin-top: var(--mx-space-sm);
+}
+
+.yt-card-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--mx-accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.yt-card-details {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.yt-card-title {
+  font-size: var(--mx-text-xs);
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 2px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.yt-card-meta {
+  font-size: 10px;
+  color: #aaa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Playback Theater ── */
+.yt-play-layout {
+  display: flex;
+  gap: var(--mx-space-lg);
+  align-items: flex-start;
+  height: 100%;
+}
+
+.yt-play-left-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: 100%;
+  padding-right: var(--mx-space-sm);
+}
+
+.yt-player-container {
+  aspect-ratio: 16/9;
+  width: 100%;
+  background: #000;
+  border-radius: var(--mx-radius-md);
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+}
+
+.yt-iframe-player {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.yt-video-title {
+  font-size: var(--mx-text-sm);
+  font-weight: 700;
+  margin-top: var(--mx-space-md);
+  margin-bottom: var(--mx-space-sm);
+}
+
+/* ── Subs & Likes ── */
+.yt-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--mx-space-md);
+}
+
+.yt-sub-count {
+  font-size: 10px;
+  color: #aaa;
+}
+
+.yt-btn-sub {
+  background: #fff;
+  border: none;
+  color: #000;
+  font-weight: 600;
+  font-size: 11px;
+  padding: 6px 14px;
+  border-radius: var(--mx-radius-full);
+  cursor: pointer;
+  transition: all var(--mx-duration-fast);
+}
+
+.yt-btn-sub.subscribed {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.yt-btn-like {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  font-weight: 500;
+  font-size: 11px;
+  padding: 6px 14px;
+  border-radius: var(--mx-radius-full);
+  cursor: pointer;
+  transition: all var(--mx-duration-fast);
+}
+
+.yt-btn-like.liked {
+  background: rgba(255, 255, 255, 0.25);
+  color: #3b82f6;
+}
+
+.yt-desc-box {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--mx-radius-md);
+  padding: var(--mx-space-md);
+  font-size: var(--mx-text-xs);
+  margin-bottom: var(--mx-space-lg);
+}
+
+/* ── Comments Section ── */
+.yt-comments-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: var(--mx-space-md);
+}
+
+.yt-comment-form {
+  display: flex;
+  gap: var(--mx-space-sm);
+  margin-bottom: var(--mx-space-md);
+}
+
+.yt-comment-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: var(--mx-text-xs);
+  outline: none;
+  padding: 4px 0;
+  transition: border-bottom var(--mx-duration-fast);
+}
+
+.yt-comment-input:focus {
+  border-bottom-color: #fff;
+}
+
+.yt-comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mx-space-md);
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.yt-comment-card {
+  display: flex;
+  gap: var(--mx-space-sm);
+}
+
+.yt-comment-avatar {
+  font-size: 14px;
+}
+
+.yt-comment-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.yt-comment-author {
+  font-size: 10px;
+  font-weight: 600;
+  color: #aaa;
+}
+
+.yt-comment-text {
+  font-size: 11px;
+  color: #fff;
+  margin-top: 2px;
+}
+
+/* ── Recommended Next Column ── */
+.yt-play-right-col {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mx-space-md);
+  flex-shrink: 0;
+  overflow-y: auto;
+  max-height: 100%;
+}
+
+.yt-rec-card {
+  display: flex;
+  gap: var(--mx-space-sm);
+  cursor: pointer;
+}
+
+.yt-rec-thumb {
+  width: 90px;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  border-radius: var(--mx-radius-sm);
+}
+
+.yt-rec-details {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.yt-rec-title {
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.yt-rec-meta {
+  font-size: 9px;
+  color: #aaa;
+}

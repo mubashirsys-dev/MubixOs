@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-perf-tier="3">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="MUBIX OS — The Future OS for Old Machines" />
+  <meta name="theme-color" content="#0a0a0f" />
+  <title>MUBIX OS</title>
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="/icons/mubix-logo.svg" />
+
+  <!-- Critical inline CSS for instant splash -->
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #0a0a0f; color: #e8e8ed; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    #mubix-root { width: 100%; height: 100%; position: relative; }
+
+    /* Boot splash — shown instantly before JS loads */
+    #boot-splash {
+      position: fixed; inset: 0; z-index: 99999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: radial-gradient(circle, rgba(10, 9, 14, 0.75) 0%, rgba(10, 9, 14, 0.98) 100%), url('/bg.png') center/cover no-repeat;
+      transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+      opacity: 0;
+      animation: boot-fade-in 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      will-change: opacity;
+    }
+    #boot-splash.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    
+    /* Circuit Line Vectors Background */
+    .boot-circuit-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0;
+      animation: fade-in-circuits 2.5s ease forwards 0.4s;
+    }
+    
+    .circuit-path {
+      stroke: var(--accent, #8B5CF6);
+      stroke-width: 1.5;
+      stroke-dasharray: 400;
+      stroke-dashoffset: 400;
+      animation: draw-circuits 3s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.6s;
+    }
+
+    /* Logo structure */
+    .boot-logo-container {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: scale(0.9);
+      animation: logo-pop 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.5s;
+    }
+
+    .boot-logo-svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.4));
+    }
+
+    .logo-glow-rect {
+      stroke: #8B5CF6;
+      stroke-width: 2.5;
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: draw-rect 2.5s ease forwards 0.8s;
+    }
+
+    /* Text details */
+    .boot-info {
+      text-align: center;
+      z-index: 2;
+    }
+
+    .logo-text {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: 0.25em;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255,255,255,0.1);
+      opacity: 0;
+      transform: translateY(10px);
+      animation: text-up 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 1.2s;
+    }
+
+    .logo-text span {
+      color: #FF6B6B;
+    }
+
+    .tagline {
+      margin-top: 0.6rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      color: rgba(248, 245, 238, 0.6);
+      font-weight: 400;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: text-up 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 1.4s;
+    }
+
+    /* Soft loading bar */
+    .boot-progress {
+      margin-top: 2.2rem;
+      width: 220px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 2px;
+      overflow: hidden;
+      opacity: 0;
+      animation: fade-in-progress 0.8s ease forwards 1.6s;
+    }
+    
+    .boot-progress-bar {
+      height: 100%;
+      width: 0%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #8B5CF6, #FF6B6B);
+      box-shadow: 0 0 8px rgba(139, 92, 246, 0.5);
+      transition: width 0.3s ease;
+    }
+
+    @keyframes boot-fade-in {
+      to { opacity: 1; }
+    }
+    @keyframes fade-in-circuits {
+      to { opacity: 0.35; }
+    }
+    @keyframes draw-circuits {
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes logo-pop {
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes draw-rect {
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes text-up {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fade-in-progress {
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div id="mubix-root">
+    <!-- Boot splash screen — visible instantly -->
+    <div id="boot-splash">
+      <!-- Circuit decorative backdrop -->
+      <svg class="boot-circuit-svg" viewBox="0 0 800 600" fill="none">
+        <path class="circuit-path" d="M 100,100 L 250,100 L 300,150 L 300,300 L 350,350 L 450,350 L 500,300" />
+        <path class="circuit-path" d="M 700,500 L 550,500 L 500,450 L 500,300" />
+        <path class="circuit-path" d="M 100,500 L 200,500 L 250,450 L 300,450" />
+        <path class="circuit-path" d="M 700,100 L 600,100 L 550,150 L 500,150" />
+      </svg>
+
+      <!-- Central Logo Container -->
+      <div class="boot-logo-container">
+        <svg class="boot-logo-svg" viewBox="0 0 64 64" fill="none">
+          <rect class="logo-glow-rect" x="4" y="4" width="56" height="56" rx="14" fill="#0c090e" />
+          <path d="M 20,44 L 20,20 L 32,32 L 44,20 L 44,44" stroke="#FF6B6B" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+
+      <!-- Info and Tagline -->
+      <div class="boot-info">
+        <div class="logo-text">MUBIX OS <span>LITE</span></div>
+        <div class="tagline">The Future OS for Old Machines</div>
+      </div>
+
+      <!-- Soft Progress Bar -->
+      <div class="boot-progress">
+        <div class="boot-progress-bar" id="boot-progress-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

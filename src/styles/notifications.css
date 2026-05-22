@@ -1,0 +1,135 @@
+/* MUBIX OS — Notification Styles */
+
+#notification-container {
+  position: fixed;
+  top: var(--mx-space-lg);
+  right: var(--mx-space-lg);
+  z-index: var(--mx-z-notification);
+  display: flex;
+  flex-direction: column;
+  gap: var(--mx-space-sm);
+  pointer-events: none;
+  max-width: 340px;
+}
+
+.notification {
+  pointer-events: auto;
+  padding: var(--mx-space-md) var(--mx-space-lg);
+  display: flex;
+  gap: var(--mx-space-md);
+  align-items: flex-start;
+  animation: mx-notification-in var(--mx-duration-slow) var(--mx-ease-default) forwards;
+  cursor: pointer;
+  min-width: 280px;
+}
+
+.notification.closing {
+  animation: mx-notification-out var(--mx-duration-smooth) var(--mx-ease-in) forwards;
+}
+
+.notification-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.notification-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.notification-title {
+  font-size: var(--mx-text-sm);
+  font-weight: var(--mx-weight-semibold);
+  color: var(--mx-text-primary);
+  margin-bottom: 2px;
+}
+
+.notification-message {
+  font-size: var(--mx-text-xs);
+  color: var(--mx-text-secondary);
+  line-height: 1.4;
+}
+
+.notification-close {
+  font-size: var(--mx-text-sm);
+  color: var(--mx-text-tertiary);
+  cursor: pointer;
+  padding: 2px;
+  flex-shrink: 0;
+  transition: color var(--mx-duration-fast);
+}
+
+.notification-close:hover {
+  color: var(--mx-text-primary);
+}
+
+/* ── Progress bar (auto-dismiss timer) ── */
+.notification-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: var(--mx-accent);
+  border-radius: 0 0 0 var(--mx-radius-md);
+  opacity: 0.5;
+  transition: width linear;
+}
+
+/* ── Context Menu ── */
+#context-menu {
+  position: fixed;
+  z-index: var(--mx-z-context-menu);
+  min-width: 180px;
+  padding: var(--mx-space-xs) 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.95);
+  transition:
+    opacity var(--mx-duration-fast) var(--mx-ease-default),
+    transform var(--mx-duration-fast) var(--mx-ease-default),
+    visibility var(--mx-duration-fast);
+}
+
+#context-menu.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}
+
+.ctx-item {
+  display: flex;
+  align-items: center;
+  gap: var(--mx-space-sm);
+  padding: var(--mx-space-sm) var(--mx-space-lg);
+  font-size: var(--mx-text-sm);
+  color: var(--mx-text-primary);
+  cursor: pointer;
+  transition: background var(--mx-duration-fast);
+}
+
+.ctx-item:hover {
+  background: rgba(96, 165, 250, 0.12);
+}
+
+.ctx-item-icon {
+  width: 16px;
+  text-align: center;
+  font-size: var(--mx-text-sm);
+  color: var(--mx-text-secondary);
+}
+
+.ctx-item-label {
+  flex: 1;
+}
+
+.ctx-item-shortcut {
+  font-size: var(--mx-text-xs);
+  color: var(--mx-text-tertiary);
+}
+
+.ctx-separator {
+  height: 1px;
+  margin: var(--mx-space-xs) var(--mx-space-sm);
+  background: rgba(255, 255, 255, 0.06);
+}

@@ -1,0 +1,322 @@
+/* MUBIX OS — Google Lite App Styles */
+
+.google-app-body {
+  height: 100%;
+  background: var(--mx-bg-secondary);
+  font-family: var(--mx-font-sans);
+  color: var(--mx-text-primary);
+  overflow: hidden;
+}
+
+.google-btn {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--mx-surface-border);
+  border-radius: var(--mx-radius-sm);
+  color: var(--mx-text-secondary);
+  font-size: var(--mx-text-xs);
+  padding: 6px 14px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all var(--mx-duration-fast);
+}
+
+.google-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--mx-accent);
+  color: var(--mx-text-primary);
+}
+
+/* ── Google Home View ── */
+.google-home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: var(--mx-space-xl);
+  text-align: center;
+}
+
+.google-logo-container {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  margin-bottom: 2rem;
+  user-select: none;
+  font-family: 'Outfit', sans-serif;
+  text-shadow: 0 0 15px rgba(59, 130, 246, 0.15);
+}
+
+.google-logo-container .g-blue { color: #3b82f6; }
+.google-logo-container .g-red { color: #ef4444; }
+.google-logo-container .g-yellow { color: #f59e0b; }
+.google-logo-container .g-green { color: #10b981; }
+.google-logo-container .g-lite {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--mx-text-secondary);
+  letter-spacing: 2px;
+}
+
+.google-search-row {
+  display: flex;
+  width: 100%;
+  max-width: 480px;
+  gap: var(--mx-space-sm);
+  margin-bottom: var(--mx-space-xl);
+}
+
+.google-search-input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--mx-surface-border);
+  border-radius: var(--mx-radius-full);
+  padding: 8px 16px;
+  font-size: var(--mx-text-xs);
+  color: var(--mx-text-primary);
+  outline: none;
+  transition: all var(--mx-duration-fast);
+}
+
+.google-search-input:focus {
+  border-color: var(--mx-accent);
+  box-shadow: 0 0 10px var(--mx-accent-glow);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.google-trending-title {
+  font-size: var(--mx-text-xs);
+  color: var(--mx-text-secondary);
+  margin-bottom: var(--mx-space-sm);
+}
+
+.google-trending-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.google-tag {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--mx-surface-border);
+  border-radius: var(--mx-radius-full);
+  font-size: 10px;
+  padding: 4px 10px;
+  color: var(--mx-text-secondary);
+  cursor: pointer;
+  transition: all var(--mx-duration-fast);
+}
+
+.google-tag:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--mx-accent);
+  color: var(--mx-text-primary);
+}
+
+/* ── Google Search Results View ── */
+.google-results-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.google-results-header {
+  display: flex;
+  align-items: center;
+  gap: var(--mx-space-md);
+  padding: var(--mx-space-sm) var(--mx-space-md);
+  border-bottom: 1px solid var(--mx-surface-border);
+  background: rgba(0, 0, 0, 0.1);
+  height: 52px;
+  flex-shrink: 0;
+}
+
+.google-logo-sm {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #3b82f6;
+  cursor: pointer;
+  letter-spacing: -0.5px;
+}
+
+.google-nav-input {
+  flex: 1;
+  max-width: 400px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--mx-surface-border);
+  border-radius: var(--mx-radius-full);
+  padding: 5px 12px;
+  font-size: var(--mx-text-xs);
+  color: var(--mx-text-primary);
+  outline: none;
+}
+
+.google-results-filter-bar {
+  display: flex;
+  gap: var(--mx-space-md);
+  padding: 0 var(--mx-space-md);
+  border-bottom: 1px solid var(--mx-surface-border);
+  background: rgba(0, 0, 0, 0.05);
+  height: 32px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.google-filter-tab {
+  font-size: var(--mx-text-xs);
+  color: var(--mx-text-secondary);
+  cursor: pointer;
+  padding: 2px 4px;
+}
+
+.google-filter-tab.active {
+  color: var(--mx-accent);
+  font-weight: 600;
+  border-bottom: 2px solid var(--mx-accent);
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.google-results-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--mx-space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--mx-space-md);
+}
+
+/* ── Simulated Search Results Cards ── */
+.google-result-card {
+  max-width: 600px;
+  padding: var(--mx-space-sm) 0;
+}
+
+.google-result-path {
+  font-size: 10px;
+  color: var(--mx-text-secondary);
+  margin-bottom: 2px;
+  font-family: var(--mx-font-mono);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.google-result-title {
+  font-size: var(--mx-text-sm);
+  font-weight: 500;
+  color: #8ab4f8;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.google-result-title:hover {
+  text-decoration: underline;
+}
+
+.google-result-snippet {
+  font-size: var(--mx-text-xs);
+  color: var(--mx-text-secondary);
+  line-height: 1.4;
+}
+
+/* ── Interactive Widgets ── */
+.google-widget {
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid var(--mx-surface-border);
+  border-radius: var(--mx-radius-md);
+  padding: var(--mx-space-md);
+  max-width: 600px;
+  margin-bottom: var(--mx-space-sm);
+}
+
+.weather-widget {
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.05) 0%, rgba(167, 139, 250, 0.03) 100%);
+  border-color: rgba(96, 165, 250, 0.2);
+}
+
+.weather-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--mx-space-md);
+}
+
+.weather-temp {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.weather-icon {
+  font-size: 2.2rem;
+}
+
+.weather-details {
+  display: flex;
+  gap: var(--mx-space-lg);
+  font-size: var(--mx-text-xs);
+  color: var(--mx-text-secondary);
+}
+
+.system-widget {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.05) 0%, rgba(236, 72, 153, 0.03) 100%);
+  border-color: rgba(167, 139, 250, 0.2);
+}
+
+/* ── Simulated Detail Browser Viewport ── */
+.google-detail-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--mx-space-md);
+  overflow: hidden;
+}
+
+.google-address-bar {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--mx-surface-border);
+  border-radius: var(--mx-radius-sm);
+  padding: var(--mx-space-xs) var(--mx-space-md);
+  font-size: 10px;
+  font-family: var(--mx-font-mono);
+  margin-bottom: var(--mx-space-md);
+  display: flex;
+  align-items: center;
+}
+
+.google-simulated-viewport {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--mx-surface-border);
+  border-radius: var(--mx-radius-md);
+  padding: var(--mx-space-lg);
+  overflow-y: auto;
+  line-height: 1.6;
+}
+
+.google-simulated-viewport h1 {
+  font-size: 1.4rem;
+  margin-bottom: var(--mx-space-md);
+  color: var(--mx-accent);
+  border-bottom: 1px solid var(--mx-surface-border);
+  padding-bottom: 4px;
+}
+
+.google-simulated-viewport p {
+  font-size: var(--mx-text-xs);
+  color: var(--mx-text-secondary);
+  margin-bottom: var(--mx-space-md);
+}
+
+.google-simulated-viewport pre {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: var(--mx-space-md);
+  border-radius: var(--mx-radius-sm);
+  font-family: var(--mx-font-mono);
+  font-size: var(--mx-text-xs);
+  margin-bottom: var(--mx-space-md);
+}

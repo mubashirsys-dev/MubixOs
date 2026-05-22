@@ -1,0 +1,151 @@
+/* MUBIX OS — Dock Styles */
+
+#dock-container {
+  position: fixed;
+  bottom: var(--mx-space-lg);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--mx-z-dock);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#dock {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--mx-dock-gap);
+  padding: var(--mx-space-sm) var(--mx-space-md);
+  height: var(--mx-dock-h);
+  transition: gap var(--mx-duration-normal) var(--mx-ease-default);
+  background: var(--dock-bg);
+  border: 2px solid var(--text-primary);
+  border-radius: var(--mx-radius-lg);
+  box-shadow: 4px 4px 0px var(--text-primary);
+}
+
+/* ── Dock Item ── */
+.dock-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  position: relative;
+  transform-origin: center bottom;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--mx-duration-smooth) var(--mx-ease-spring);
+  will-change: transform;
+}
+
+.dock-icon {
+  width: var(--mx-dock-icon-size);
+  height: var(--mx-dock-icon-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--mx-radius-md);
+  background: var(--bg-secondary);
+  border: 2px solid var(--text-primary);
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  transform-origin: center bottom;
+  box-shadow: 2px 2px 0px var(--text-primary);
+  transition:
+    transform var(--mx-duration-smooth) var(--mx-ease-spring),
+    border-color var(--mx-duration-smooth) var(--mx-ease-default),
+    box-shadow var(--mx-duration-smooth) var(--mx-ease-default);
+  will-change: transform;
+}
+
+/* Closest focus node */
+.dock-item:hover .dock-icon,
+.dock-item[data-near="0"] .dock-icon {
+  transform: scale(1.3) translateY(-6px) !important;
+  box-shadow: 4px 4px 0px var(--accent) !important;
+  border-color: var(--accent) !important;
+  z-index: 5;
+}
+
+.dock-item:active .dock-icon {
+  transform: scale(1.15) translateY(-3px) !important;
+}
+
+/* Neighbor magnification nodes */
+.dock-item[data-near="1"] .dock-icon {
+  transform: scale(1.15) translateY(-2px) !important;
+  z-index: 2;
+}
+
+/* ── Running Indicator ── */
+.dock-indicator {
+  width: 5px;
+  height: 5px;
+  border-radius: 1px;
+  transform: rotate(45deg);
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity var(--mx-duration-fast) var(--mx-ease-default);
+}
+
+.dock-item.running .dock-indicator {
+  opacity: 1;
+}
+
+/* ── Tooltip ── */
+.dock-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  padding: 4px 10px;
+  background: rgba(20, 20, 30, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--mx-radius-sm);
+  font-size: var(--mx-text-xs);
+  color: var(--mx-text-primary);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity var(--mx-duration-fast) var(--mx-ease-default),
+    transform var(--mx-duration-fast) var(--mx-ease-default);
+  z-index: 1;
+}
+
+.dock-item:hover .dock-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── Dock Separator ── */
+.dock-separator {
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 var(--mx-space-xs);
+  align-self: center;
+}
+
+/* ── Dock Clock ── */
+.dock-clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 var(--mx-space-sm);
+  cursor: default;
+  align-self: center;
+}
+
+.dock-clock-time {
+  font-size: var(--mx-text-sm);
+  font-weight: var(--mx-weight-medium);
+  color: var(--mx-text-primary);
+  letter-spacing: 0.02em;
+}
+
+.dock-clock-date {
+  font-size: 0.6rem;
+  color: var(--mx-text-tertiary);
+  letter-spacing: 0.02em;
+}

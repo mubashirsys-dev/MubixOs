@@ -1,0 +1,109 @@
+/* MUBIX OS — GPU-Safe Animation Library
+   RULE: transform + opacity ONLY. No layout/paint triggers. */
+
+/* ── Keyframes ── */
+@keyframes mx-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes mx-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes mx-scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes mx-scale-out {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.92); }
+}
+
+@keyframes mx-slide-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes mx-slide-down {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes mx-slide-up-out {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-12px); }
+}
+
+@keyframes mx-dock-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes mx-notification-in {
+  from { opacity: 0; transform: translateX(100%) scale(0.95); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes mx-notification-out {
+  from { opacity: 1; transform: translateX(0) scale(1); }
+  to { opacity: 0; transform: translateX(100%) scale(0.95); }
+}
+
+@keyframes mx-window-open {
+  from { opacity: 0; transform: scale(0.88) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes mx-window-close {
+  from { opacity: 1; transform: scale(1) translateY(0); }
+  to { opacity: 0; transform: scale(0.88) translateY(20px); }
+}
+
+@keyframes mx-window-minimize {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.5) translateY(60vh); }
+}
+
+@keyframes mx-launcher-open {
+  from { opacity: 0; transform: scale(1.02); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes mx-launcher-close {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.02); }
+}
+
+@keyframes mx-pulse-dot {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ── Utility Classes ── */
+.anim-fade-in { animation: mx-fade-in var(--mx-duration-smooth) var(--mx-ease-default) forwards; }
+.anim-fade-out { animation: mx-fade-out var(--mx-duration-smooth) var(--mx-ease-default) forwards; }
+.anim-scale-in { animation: mx-scale-in var(--mx-duration-smooth) var(--mx-ease-default) forwards; }
+.anim-scale-out { animation: mx-scale-out var(--mx-duration-normal) var(--mx-ease-default) forwards; }
+.anim-slide-up { animation: mx-slide-up var(--mx-duration-smooth) var(--mx-ease-default) forwards; }
+.anim-slide-down { animation: mx-slide-down var(--mx-duration-smooth) var(--mx-ease-default) forwards; }
+
+/* ── Tier 1: instant transitions ── */
+html[data-perf-tier="1"] .anim-fade-in,
+html[data-perf-tier="1"] .anim-fade-out,
+html[data-perf-tier="1"] .anim-scale-in,
+html[data-perf-tier="1"] .anim-scale-out,
+html[data-perf-tier="1"] .anim-slide-up,
+html[data-perf-tier="1"] .anim-slide-down {
+  animation-duration: 0ms !important;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
