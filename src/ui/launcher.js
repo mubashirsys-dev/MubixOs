@@ -46,12 +46,34 @@ class Launcher {
       if (e.target === this._el) this.hide();
     });
 
-    // Keyboard
+    // Keyboard shortcuts: Ctrl + Space and Alt double-tap (immersive overrides)
+    let lastAltTime = 0;
+
     document.addEventListener('keydown', (e) => {
-      // Super/Meta key toggles launcher
-      if (e.key === 'Meta' || (e.key === 'Escape' && this._open)) {
+      // 1. Ctrl + Space toggles launcher
+      if (e.ctrlKey && e.code === 'Space') {
         e.preventDefault();
         this.toggle();
+        return;
+      }
+
+      // 2. Alt double-tap toggles launcher
+      if (e.key === 'Alt') {
+        const now = Date.now();
+        if (now - lastAltTime < 250) {
+          e.preventDefault();
+          this.toggle();
+          lastAltTime = 0; // Reset
+        } else {
+          lastAltTime = now;
+        }
+        return;
+      }
+
+      // 3. Escape key closes launcher
+      if (e.key === 'Escape' && this._open) {
+        e.preventDefault();
+        this.hide();
       }
     });
 

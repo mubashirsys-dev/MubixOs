@@ -95,22 +95,24 @@
 /* ── Tooltip ── */
 .dock-tooltip {
   position: absolute;
-  bottom: calc(100% + 8px);
+  bottom: calc(100% + 14px);
   left: 50%;
   transform: translateX(-50%) translateY(4px);
   padding: 4px 10px;
-  background: rgba(20, 20, 30, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-primary);
+  border: 2px solid var(--text-primary);
   border-radius: var(--mx-radius-sm);
   font-size: var(--mx-text-xs);
-  color: var(--mx-text-primary);
+  color: var(--text-primary);
+  font-weight: 800;
   white-space: nowrap;
   pointer-events: none;
   opacity: 0;
+  box-shadow: 3px 3px 0px var(--text-primary);
   transition:
     opacity var(--mx-duration-fast) var(--mx-ease-default),
     transform var(--mx-duration-fast) var(--mx-ease-default);
-  z-index: 1;
+  z-index: 10;
 }
 
 .dock-item:hover .dock-tooltip {
@@ -185,4 +187,82 @@
 
 .dock-battery.charging .battery-level {
   color: var(--mx-green);
+}
+
+/* ── Dock System Items Hover Overrides ── */
+.dock-item.system-item .dock-icon {
+  background: var(--bg-primary);
+}
+
+.dock-item#dock-logout-btn:hover .dock-icon {
+  background: var(--mx-red) !important;
+  border-color: var(--mx-red) !important;
+  box-shadow: 4px 4px 0px var(--text-primary) !important;
+}
+
+.dock-item#dock-logout-btn:hover .dock-icon {
+  color: #F8F5EE !important;
+}
+
+.dock-item#dock-info-btn:hover .dock-icon {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  box-shadow: 4px 4px 0px var(--text-primary) !important;
+}
+
+.dock-item#dock-info-btn:hover .dock-icon {
+  color: #F8F5EE !important;
+}
+
+/* ── Immersive Floating Onboarding Tooltip ── */
+.mubix-onboarding-tooltip {
+  position: absolute;
+  bottom: 80px; /* Floating above the dock */
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: #F8F5EE;
+  border: 2px solid var(--text-primary);
+  padding: 10px 16px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px var(--text-primary), 0 5px 15px rgba(0, 0, 0, 0.1);
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s cubic-bezier(0.2, 0, 0, 1), transform 0.3s cubic-bezier(0.2, 0, 0, 1), visibility 0.3s;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mubix-onboarding-tooltip.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.mubix-onboarding-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: var(--text-primary) transparent transparent transparent;
+}
+
+/* Smooth fade-out screen overlay for shutdown transition */
+.mubix-shutdown-overlay {
+  position: fixed;
+  inset: 0;
+  background: #111111;
+  opacity: 0;
+  z-index: 999999;
+  pointer-events: all;
+  transition: opacity 1.2s cubic-bezier(0.2, 0, 0, 1);
 }

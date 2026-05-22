@@ -72,15 +72,15 @@ export function createWindow(data, wm) {
 /**
  * Drag handler — uses standard-compliant Pointer Capture API for seamless dragging over iframes.
  */
+/**
+ * Drag handler — uses standard-compliant Pointer Capture API for seamless dragging over iframes.
+ */
 function setupDrag(win, titlebar, id, data, wm) {
   let dragging = false;
   let startX = 0;
   let startY = 0;
   let origX = 0;
   let origY = 0;
-  let currentX = 0;
-  let currentY = 0;
-  let rafId = null;
 
   const onPointerMove = (e) => {
     if (!dragging) return;
@@ -88,6 +88,7 @@ function setupDrag(win, titlebar, id, data, wm) {
     const winData = wm.windows.get(id);
     if (!winData) return;
 
+    // Calculate delta relative to original pointer coordinates
     const dx = e.clientX - startX;
     const dy = e.clientY - startY;
 
@@ -96,57 +97,38 @@ function setupDrag(win, titlebar, id, data, wm) {
 
     const vw = window.innerWidth;
     const vh = window.innerHeight;
-    const dockHeight = 75; // Area occupied by dock at bottom
+    const dockHeight = 75;
 
-    // Clamp window within screen viewport limits
-    newX = clamp(newX, 0, vw - winData.w);
-    newY = clamp(newY, 0, vh - dockHeight - 36);
+    // Viewport bounds clamping: titlebar must remain accessible and on-screen
+    const maxX = vw - 50; 
+    const minX = -winData.w + 50; 
+    const maxY = vh - dockHeight - 30; 
+    const minY = 0; 
 
-    // ── 20px Snapping Threshold ──
-    const snapThreshold = 20;
-    if (newX < snapThreshold) {
-      newX = 0;
-    } else if (newX + winData.w > vw - snapThreshold) {
-      newX = vw - winData.w;
-    }
+    newX = clamp(newX, minX, maxX);
+    newY = clamp(newY, minY, maxY);
 
-    if (newY < snapThreshold) {
-      newY = 0;
-    } else if (newY + winData.h > vh - dockHeight - snapThreshold) {
-      newY = vh - dockHeight - winData.h;
-    }
-
-    currentX = newX;
-    currentY = newY;
-
-    // Use requestAnimationFrame for composited layer transforms without reflows
-    if (!rafId) {
-      rafId = requestAnimationFrame(() => {
-        winData.x = currentX;
-        winData.y = currentY;
-        win.style.setProperty('--wx', currentX + 'px');
-        win.style.setProperty('--wy', currentY + 'px');
-        rafId = null;
-      });
-    }
-
-    // Snap preview visualizer
+    // Snap target overlays
     if (e.clientX <= 6) wm.showSnapPreview('left');
     else if (e.clientX >= vw - 6) wm.showSnapPreview('right');
     else if (e.clientY <= 6) wm.showSnapPreview('top');
     else wm.hideSnapPreview();
+
+    // Zero-latency transform application bypasses RAF queue to track cursor 1:1
+    winData.x = newX;
+    winData.y = newY;
+    win.style.setProperty('--wx', newX + 'px');
+    win.style.setProperty('--wy', newY + 'px');
   };
 
   const endDrag = (e) => {
     if (!dragging) return;
     dragging = false;
 
-    if (rafId) {
-      cancelAnimationFrame(rafId);
-      rafId = null;
-    }
+    try {
+      titlebar.releasePointerCapture(e.pointerId);
+    } catch (err) {}
 
-    // Unbind listeners from window
     window.removeEventListener('pointermove', onPointerMove);
     window.removeEventListener('pointerup', endDrag);
     window.removeEventListener('pointercancel', endDrag);
@@ -161,7 +143,7 @@ function setupDrag(win, titlebar, id, data, wm) {
     const winData = wm.windows.get(id);
     if (!winData) return;
 
-    // Apply Snapping on Release
+    // Snap triggering on release
     const vw = window.innerWidth;
     if (e.clientX <= 6) {
       wm.snap(id, 'left');
@@ -177,7 +159,9 @@ function setupDrag(win, titlebar, id, data, wm) {
   };
 
   titlebar.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0) return; // Drag on left click only
     if (e.target.closest('.window-controls')) return;
+
     const winData = wm.windows.get(id);
     if (!winData || winData.state === 'maximized') return;
 
@@ -186,35 +170,34 @@ function setupDrag(win, titlebar, id, data, wm) {
     dragging = true;
     startX = e.clientX;
     startY = e.clientY;
+    origX = winData.x;
+    origY = winData.y;
 
-    // ── Active Snapped Window Unsnapping ──
+    // Seamless un-snapping if window is currently snapped
     if (winData.state && winData.state.startsWith('snapped')) {
       winData.state = 'normal';
       win.classList.remove('snapped-left', 'snapped-right');
       win.style.width = winData.w + 'px';
       win.style.height = winData.h + 'px';
 
-      // Center original width horizontally under the pointer
-      let targetX = e.clientX - winData.w / 2;
-      let targetY = e.clientY - 18;
+      // Center horizontally under cursor
+      origX = e.clientX - winData.w / 2;
+      origY = e.clientY - 18;
 
       const vw = window.innerWidth;
       const vh = window.innerHeight;
-      targetX = clamp(targetX, 0, vw - winData.w);
-      targetY = clamp(targetY, 0, vh - 75 - 36);
+      origX = clamp(origX, 0, vw - winData.w);
+      origY = clamp(origY, 0, vh - 75 - 36);
 
-      winData.x = targetX;
-      winData.y = targetY;
-      win.style.setProperty('--wx', targetX + 'px');
-      win.style.setProperty('--wy', targetY + 'px');
+      winData.x = origX;
+      winData.y = origY;
+      win.style.setProperty('--wx', origX + 'px');
+      win.style.setProperty('--wy', origY + 'px');
     }
 
-    origX = winData.x;
-    origY = winData.y;
-    currentX = origX;
-    currentY = origY;
-
-    e.preventDefault();
+    try {
+      titlebar.setPointerCapture(e.pointerId);
+    } catch (err) {}
 
     win.style.transition = 'none';
     win.classList.add('dragging');
@@ -222,8 +205,7 @@ function setupDrag(win, titlebar, id, data, wm) {
     document.body.style.userSelect = 'none';
     document.body.style.webkitUserSelect = 'none';
 
-    // Bind event listeners globally to window
-    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('pointermove', onPointerMove);
     window.addEventListener('pointerup', endDrag);
     window.addEventListener('pointercancel', endDrag);
   });

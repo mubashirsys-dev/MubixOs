@@ -61,7 +61,7 @@
 .mx-window.focused {
   z-index: calc(var(--mx-z-window) + var(--wz, 0));
   border-color: var(--accent) !important;
-  box-shadow: 6px 6px 0px var(--accent) !important;
+  box-shadow: 6px 6px 0px var(--text-primary), 0 0 20px rgba(139, 92, 246, 0.45) !important;
 }
 
 .mx-window:not(.focused) {

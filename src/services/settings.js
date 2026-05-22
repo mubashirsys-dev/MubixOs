@@ -10,7 +10,7 @@ const SETTINGS_PATH = '/system/config/settings.json';
 
 const DEFAULTS = {
   theme: 'light',
-  wallpaper: 'mesh',
+  wallpaper: '/bg.png',
   performanceTier: 'auto',
   fontSize: 14,
   animations: true,

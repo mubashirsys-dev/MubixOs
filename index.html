@@ -19,13 +19,42 @@
     #boot-splash {
       position: fixed; inset: 0; z-index: 99999;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      background: radial-gradient(circle, rgba(248, 245, 238, 0.85) 0%, rgba(240, 237, 229, 0.98) 100%), url('/bg.png') center/cover no-repeat;
-      transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+      background: radial-gradient(circle at center, #F8F5EE 0%, #E6E2D8 100%);
+      transition: opacity 0.8s cubic-bezier(0.2, 0, 0, 1), visibility 0.8s;
       opacity: 0;
-      animation: boot-fade-in 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation: boot-fade-in 1.2s cubic-bezier(0.2, 0, 0, 1) forwards;
       will-change: opacity;
     }
     #boot-splash.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    
+    /* Technical Diagnostic Dotted Grid Background */
+    #boot-splash::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(17, 17, 17, 0.05) 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+      opacity: 0;
+      animation: fade-in-grid 2s cubic-bezier(0.2, 0, 0, 1) forwards 0.5s;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Subtle corner design details for high-fidelity technical realism */
+    .boot-corner-crosshair {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border: 1.5px solid rgba(17, 17, 17, 0.12);
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0;
+      animation: fade-in-grid 1.5s cubic-bezier(0.2, 0, 0, 1) forwards 0.8s;
+    }
+    .boot-corner-crosshair.top-left { top: 40px; left: 40px; border-right: none; border-bottom: none; }
+    .boot-corner-crosshair.top-right { top: 40px; right: 40px; border-left: none; border-bottom: none; }
+    .boot-corner-crosshair.bottom-left { bottom: 40px; left: 40px; border-right: none; border-top: none; }
+    .boot-corner-crosshair.bottom-right { bottom: 40px; right: 40px; border-left: none; border-top: none; }
     
     /* Circuit Line Vectors Background */
     .boot-circuit-svg {
@@ -43,7 +72,7 @@
       stroke-width: 1.5;
       stroke-dasharray: 400;
       stroke-dashoffset: 400;
-      animation: draw-circuits 3s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.6s;
+      animation: draw-circuits 3s cubic-bezier(0.2, 0, 0, 1) forwards 0.6s;
     }
 
     /* Logo structure */
@@ -55,6 +84,7 @@
       opacity: 0;
       transform: scale(0.9);
       animation: logo-pop 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.5s;
+      z-index: 2;
     }
 
     .boot-logo-svg {
@@ -69,6 +99,13 @@
       stroke-dasharray: 300;
       stroke-dashoffset: 300;
       animation: draw-rect 2.5s ease forwards 0.8s;
+    }
+
+    /* Slowly assemble Mubix central vector M logo path */
+    .logo-path {
+      stroke-dasharray: 120;
+      stroke-dashoffset: 120;
+      animation: draw-logo-path 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.6s;
     }
 
     /* Text details */
@@ -114,6 +151,7 @@
       overflow: hidden;
       opacity: 0;
       animation: fade-in-progress 0.8s ease forwards 1.6s;
+      z-index: 2;
     }
     
     .boot-progress-bar {
@@ -122,7 +160,55 @@
       border-radius: 2px;
       background: linear-gradient(90deg, #8B5CF6, #FF6B6B);
       box-shadow: 0 0 8px rgba(139, 92, 246, 0.3);
-      transition: width 0.3s ease;
+      transition: width 0.1s linear;
+    }
+
+    /* Boot power gesture controls */
+    .boot-power-container {
+      margin-top: 2.2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: text-up 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 1.6s;
+    }
+
+    .boot-power-btn {
+      background: #F8F5EE;
+      border: 2px solid #111111;
+      padding: 12px 24px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      color: #111111;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 4px 4px 0px #111111;
+      transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+      position: relative;
+    }
+
+    .boot-power-btn:hover {
+      background: #8B5CF6;
+      color: #F8F5EE;
+      border-color: #111111;
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px #111111;
+    }
+
+    .boot-power-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px #111111;
+    }
+
+    .power-icon {
+      font-size: 1.1rem;
+      font-weight: bold;
     }
 
     @keyframes boot-fade-in {
@@ -131,6 +217,9 @@
     @keyframes fade-in-circuits {
       to { opacity: 0.35; }
     }
+    @keyframes fade-in-grid {
+      to { opacity: 1; }
+    }
     @keyframes draw-circuits {
       to { stroke-dashoffset: 0; }
     }
@@ -138,6 +227,9 @@
       to { opacity: 1; transform: scale(1); }
     }
     @keyframes draw-rect {
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes draw-logo-path {
       to { stroke-dashoffset: 0; }
     }
     @keyframes text-up {
@@ -152,6 +244,12 @@
   <div id="mubix-root">
     <!-- Boot splash screen — visible instantly -->
     <div id="boot-splash">
+      <!-- Ambient corner crosshairs for visual precision -->
+      <div class="boot-corner-crosshair top-left"></div>
+      <div class="boot-corner-crosshair top-right"></div>
+      <div class="boot-corner-crosshair bottom-left"></div>
+      <div class="boot-corner-crosshair bottom-right"></div>
+
       <!-- Circuit decorative backdrop -->
       <svg class="boot-circuit-svg" viewBox="0 0 800 600" fill="none">
         <path class="circuit-path" d="M 100,100 L 250,100 L 300,150 L 300,300 L 350,350 L 450,350 L 500,300" />
@@ -164,7 +262,7 @@
       <div class="boot-logo-container">
         <svg class="boot-logo-svg" viewBox="0 0 64 64" fill="none">
           <rect class="logo-glow-rect" x="4" y="4" width="56" height="56" rx="14" fill="#F0EDE5" />
-          <path d="M 20,44 L 20,20 L 32,32 L 44,20 L 44,44" stroke="#FF6B6B" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path class="logo-path" d="M 20,44 L 20,20 L 32,32 L 44,20 L 44,44" stroke="#FF6B6B" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </div>
 
@@ -177,6 +275,14 @@
       <!-- Soft Progress Bar -->
       <div class="boot-progress">
         <div class="boot-progress-bar" id="boot-progress-bar"></div>
+      </div>
+
+      <!-- Power Button for Fullscreen Gesture -->
+      <div class="boot-power-container" id="boot-power-container">
+        <button class="boot-power-btn" id="boot-power-btn">
+          <span class="power-icon">⏻</span>
+          <span>BOOT SYSTEM</span>
+        </button>
       </div>
     </div>
   </div>

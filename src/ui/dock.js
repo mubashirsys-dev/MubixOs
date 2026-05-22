@@ -50,6 +50,26 @@ class Dock {
       icon: '⊞',
     }, true);
 
+    // Help Info Button (Leverages standard magnification & tooltip style)
+    const infoBtn = h('div', {
+      class: 'dock-item system-item',
+      id: 'dock-info-btn',
+      onClick: () => this.toggleOnboardingTooltip()
+    },
+      h('div', { class: 'dock-icon' }, 'ℹ️'),
+      h('div', { class: 'dock-tooltip' }, 'System Help')
+    );
+
+    // Logout Shut Down Button (Leverages standard magnification & tooltip style)
+    const logoutBtn = h('div', {
+      class: 'dock-item system-item',
+      id: 'dock-logout-btn',
+      onClick: () => this.handleLogout()
+    },
+      h('div', { class: 'dock-icon', style: { color: 'var(--mx-red)' } }, '⏻'),
+      h('div', { class: 'dock-tooltip' }, 'Exit OS')
+    );
+
     // Dock bar
     this._dockEl = h('div', { id: 'dock', class: 'll-dock' },
       launcherBtn,
@@ -58,11 +78,20 @@ class Dock {
       sep,
       this._batteryEl,
       h('div', { class: 'dock-separator' }),
+      infoBtn,
+      logoutBtn,
+      h('div', { class: 'dock-separator' }),
       this._clockEl
     );
 
+    // Create the onboarding tooltip element with precise shortcut guidance
+    this._tooltipEl = h('div', { class: 'mubix-onboarding-tooltip' },
+      h('span', { class: 'tooltip-icon' }, '💡'),
+      h('span', {}, 'Press Ctrl + Space to open system launcher. Press ESC or click Exit to exit.')
+    );
+
     // Container
-    this._el = h('div', { id: 'dock-container' }, this._dockEl);
+    this._el = h('div', { id: 'dock-container' }, this._dockEl, this._tooltipEl);
     root.appendChild(this._el);
 
     // Dock magnification — handled via CSS hover + JS for neighbors
@@ -77,6 +106,16 @@ class Dock {
 
     // Listen for dock updates
     bus.on('dock:update', () => this._updateRunningIndicators());
+
+    // First-time onboarding floating tip trigger
+    setTimeout(() => {
+      const isFirst = !localStorage.getItem('mubix_os_onboarded');
+      if (isFirst) {
+        this.showOnboardingTooltip();
+        localStorage.setItem('mubix_os_onboarded', 'true');
+        setTimeout(() => this.hideOnboardingTooltip(), 6000);
+      }
+    }, 1500);
   }
 
   async _initBattery() {
@@ -125,6 +164,7 @@ class Dock {
 
   _createDockItem(config, isLauncher = false) {
     const icon = h('div', { class: 'dock-icon' }, config.icon);
+    const tooltip = h('div', { class: 'dock-tooltip' }, config.name);
     const indicator = h('div', { class: 'dock-indicator' });
 
     const item = h('div', {
@@ -140,7 +180,7 @@ class Dock {
           windowManager.openWindow(config.id);
         }
       },
-    }, icon, indicator);
+    }, icon, tooltip, indicator);
 
     return item;
   }
@@ -196,6 +236,53 @@ class Dock {
         item.classList.remove('running');
       }
     }
+  }
+
+  showOnboardingTooltip() {
+    if (this._tooltipEl) {
+      this._tooltipEl.classList.add('visible');
+    }
+  }
+
+  hideOnboardingTooltip() {
+    if (this._tooltipEl) {
+      this._tooltipEl.classList.remove('visible');
+    }
+  }
+
+  toggleOnboardingTooltip() {
+    if (this._tooltipEl) {
+      this._tooltipEl.classList.toggle('visible');
+    }
+  }
+
+  async handleLogout() {
+    // 1. Sleek fade-out shutdown overlay
+    const overlay = h('div', { class: 'mubix-shutdown-overlay' });
+    document.body.appendChild(overlay);
+    
+    // Trigger transition
+    void overlay.offsetWidth;
+    overlay.style.opacity = '1';
+
+    // 2. Delay for shutting down transition
+    setTimeout(async () => {
+      // 3. Exit Fullscreen Mode
+      try {
+        if (document.fullscreenElement || document.webkitFullscreenElement) {
+          if (document.exitFullscreen) {
+            await document.exitFullscreen();
+          } else if (document.webkitExitFullscreen) {
+            await document.webkitExitFullscreen();
+          }
+        }
+      } catch (err) {
+        console.warn('Failed to exit fullscreen:', err);
+      }
+
+      // 4. Return to portfolio
+      window.location.href = '/';
+    }, 1200);
   }
 
   destroy() {

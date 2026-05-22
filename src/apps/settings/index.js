@@ -170,13 +170,9 @@ export default class SettingsApp extends MubixApp {
       h('option', { value: 'false', selected: settingsService.get('grid_visible') === false }, 'Hidden')
     );
 
-    // Wallpaper Selection Grid
+    // Wallpaper Selection Grid (Keep only Mubix Branding & Custom options)
     const presetWallpapers = [
-      { id: 'mubix_brand', name: 'Premium Brand', path: '/bg.png' },
-      { id: 'mesh', name: 'Animated Mesh', path: 'mesh' },
-      { id: 'neon_grid', name: 'Neon Grid Vector', path: '/home/Pictures/neon_grid.svg' },
-      { id: 'cyber_sunset', name: 'Sunset Vector', path: '/home/Pictures/cyber_sunset.svg' },
-      { id: 'matrix_os', name: 'Matrix OS Grid', path: '/home/Pictures/matrix_os.svg' }
+      { id: 'mubix_brand', name: 'Mubix OS Default', path: '/bg.png' }
     ];
 
     const pickerContainer = h('div', { class: 'settings-wallpaper-picker' });
@@ -196,29 +192,10 @@ export default class SettingsApp extends MubixApp {
       });
 
       const thumbPreview = h('div', { class: 'wallpaper-card-thumb' });
-      if (wp.path === 'mesh') {
-        thumbPreview.style.background = 'linear-gradient(135deg, #F8F5EE 0%, #F0EDE5 100%)';
-        const meshIndicator = h('div', {
-          style: {
-            position: 'absolute',
-            inset: 0,
-            backgroundImage: 'radial-gradient(var(--mx-accent-glow) 1px, transparent 1px)',
-            backgroundSize: '8px 8px',
-            opacity: 0.5
-          }
-        });
-        thumbPreview.appendChild(meshIndicator);
-      } else if (wp.path === '/bg.png') {
+      if (wp.path === '/bg.png') {
         thumbPreview.style.backgroundImage = 'url("/bg.png")';
         thumbPreview.style.backgroundSize = 'cover';
         thumbPreview.style.backgroundPosition = 'center';
-      } else {
-        vfs.readFile(wp.path).then(content => {
-          const url = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(content)}`;
-          thumbPreview.style.backgroundImage = `url("${url}")`;
-        }).catch(err => {
-          console.warn(`[Settings] Thumb load failed: ${wp.path}`, err);
-        });
       }
 
       const label = h('div', { class: 'wallpaper-card-label' }, wp.name);
@@ -273,7 +250,7 @@ export default class SettingsApp extends MubixApp {
     },
       h('div', { class: 'settings-label-group' },
         h('span', { class: 'settings-label' }, 'Desktop Wallpaper'),
-        h('span', { class: 'settings-desc' }, 'Select a premium vector backdrop preset or upload custom images.')
+        h('span', { class: 'settings-desc' }, 'Select the brand identity wallpaper or upload custom backdrops.')
       ),
       pickerContainer,
       uploadBtn,
@@ -282,20 +259,7 @@ export default class SettingsApp extends MubixApp {
 
     const sections = [
       h('div', { class: 'settings-section-title' }, 'Personalization & Layout'),
-      h('div', { class: 'settings-row' },
-        h('div', { class: 'settings-label-group' },
-          h('span', { class: 'settings-label' }, 'Branding Accent Color'),
-          h('span', { class: 'settings-desc' }, 'Choose primary accent highlight color.')
-        ),
-        accentSelect
-      ),
-      h('div', { class: 'settings-row' },
-        h('div', { class: 'settings-label-group' },
-          h('span', { class: 'settings-label' }, 'Interface Transparency'),
-          h('span', { class: 'settings-desc' }, 'Control acrylic surface window glass opacity level.')
-        ),
-        transRange
-      ),
+      wallpaperRow,
       h('div', { class: 'settings-row' },
         h('div', { class: 'settings-label-group' },
           h('span', { class: 'settings-label' }, 'Dock Magnification Scale'),
@@ -310,14 +274,6 @@ export default class SettingsApp extends MubixApp {
         ),
         iconSizeSelect
       ),
-      h('div', { class: 'settings-row' },
-        h('div', { class: 'settings-label-group' },
-          h('span', { class: 'settings-label' }, 'Dotted Backdrop Grid'),
-          h('span', { class: 'settings-desc' }, 'Toggle dotted tech pattern presence.')
-        ),
-        gridSelect
-      ),
-      wallpaperRow,
 
       h('div', { class: 'settings-section-title' }, 'Performance & Motion'),
       h('div', { class: 'settings-row' },
@@ -333,14 +289,7 @@ export default class SettingsApp extends MubixApp {
           h('span', { class: 'settings-desc' }, 'Enforces Tier 1 rendering to reduce CPU load.')
         ),
         batteryToggle
-      ),
-      h('div', { class: 'settings-row' },
-        h('div', { class: 'settings-label-group' },
-          h('span', { class: 'settings-label' }, 'Hardware Graphics Tier'),
-          h('span', { class: 'settings-desc' }, 'Current performance profiling level.')
-        ),
-        perfSelect
-      ),
+      )
     ];
 
     sections.forEach(s => this.bodyEl.appendChild(s));
