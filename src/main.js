@@ -19,6 +19,15 @@ import '@styles/notifications.css';
 import '@apps/notepad/style.css';
 import '@apps/calculator/style.css';
 import '@apps/terminal/style.css';
+import '@apps/browser/style.css';
+import '@apps/clock/style.css';
+import '@apps/code-editor/style.css';
+import '@apps/file-manager/style.css';
+import '@apps/google-lite/style.css';
+import '@apps/image-viewer/style.css';
+import '@apps/media-player/style.css';
+import '@apps/settings/style.css';
+import '@apps/youtube-lite/style.css';
 
 // ── Boot Orchestrator ──
 import { boot } from '@core/boot.js';

@@ -14,6 +14,11 @@ export const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
  * @param  {...(Node|string)} children
  */
 export function h(tag, attrs = {}, ...children) {
+  if (tag === 'link' && attrs.rel === 'stylesheet' && attrs.href && attrs.href.startsWith('/src/apps/')) {
+    if (!import.meta.env.DEV) {
+      return document.createComment(`App stylesheet ${attrs.href} loaded from bundle`);
+    }
+  }
   const el = document.createElement(tag);
   for (const [key, val] of Object.entries(attrs)) {
     if (key === 'class' || key === 'className') {
