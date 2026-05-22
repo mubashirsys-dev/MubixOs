@@ -20,7 +20,13 @@ export function h(tag, attrs = {}, ...children) {
       if (Array.isArray(val)) el.className = val.filter(Boolean).join(' ');
       else el.className = val;
     } else if (key === 'style' && typeof val === 'object') {
-      Object.assign(el.style, val);
+      for (const [sKey, sVal] of Object.entries(val)) {
+        if (sKey.startsWith('--')) {
+          el.style.setProperty(sKey, sVal);
+        } else {
+          el.style[sKey] = sVal;
+        }
+      }
     } else if (key === 'dataset') {
       Object.assign(el.dataset, val);
     } else if (key.startsWith('on') && typeof val === 'function') {

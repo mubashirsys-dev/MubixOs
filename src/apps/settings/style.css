@@ -168,3 +168,30 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.settings-slider {
+  -webkit-appearance: none;
+  width: 120px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--mx-bg-tertiary);
+  outline: none;
+}
+
+.settings-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--mx-accent);
+  border: 1px solid var(--window-border);
+  cursor: pointer;
+}
+
+.settings-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--mx-accent);
+  cursor: pointer;
+}

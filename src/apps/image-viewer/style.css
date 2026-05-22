@@ -142,7 +142,7 @@
 .photo-viewport {
   flex: 1;
   position: relative;
-  background: rgba(10, 9, 14, 0.95);
+  background: #F8F5EE;
   display: flex;
   align-items: center;
   justify-content: center;

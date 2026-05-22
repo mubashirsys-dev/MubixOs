@@ -1,45 +1,56 @@
 /* MUBIX OS — Design Tokens */
 :root {
   /* ── CORE MUBIX BRAND VISUAL SYSTEM DESIGN TOKENS ── */
-  --bg-primary: #0a090e;
-  --bg-secondary: #131219;
-  --text-primary: #e8e8ed;
-  --text-secondary: rgba(232, 232, 237, 0.7);
+  --bg-primary: #F8F5EE;
+  --bg-secondary: #F0EDE5;
+  --bg-surface: #F0EDE5;
+  --text-primary: #111111;
+  --text-secondary: #3a3a3a;
   --accent: #8B5CF6; /* Mubix Purple */
+  --accent-purple: #8B5CF6;
   --accent-coral: #FF6B6B; /* Mubix Coral */
   --accent-yellow: #FBBF24; /* Mubix Yellow */
-  --window-bg: #131219;
-  --window-border: #8B5CF6;
-  --dock-bg: rgba(19, 18, 25, 0.85);
-  --shadow-soft: 5px 5px 0px rgba(0, 0, 0, 0.9);
+  --window-bg: #F0EDE5;
+  --window-border: #111111;
+  --dock-bg: rgba(248, 245, 238, 0.95);
+  --shadow-soft: 5px 5px 0px #111111;
+  --radius-lg: 14px;
+  --dock-height: 56px;
   --glass-opacity: 0.95;
   --grid-visible: 1;
   --motion-scale: 1;
 
+  /* Accent variable controls */
+  --accent-color: #8B5CF6;
+
+  /* Custom controls variables from settings */
+  --mx-dock-scale: 1;
+  --desktop-icon-size: 1;
+
   /* ── Color System ── */
   --mx-bg-primary: var(--bg-primary);
   --mx-bg-secondary: var(--bg-secondary);
-  --mx-bg-tertiary: var(--bg-secondary);
+  --mx-bg-tertiary: #E8E5DD;
   --mx-bg-elevated: var(--bg-secondary);
 
-  --mx-surface: rgba(255, 255, 255, 0.03);
-  --mx-surface-hover: rgba(255, 255, 255, 0.05);
-  --mx-surface-active: rgba(255, 255, 255, 0.08);
+  --mx-surface: rgba(0, 0, 0, 0.04);
+  --mx-surface-hover: rgba(0, 0, 0, 0.06);
+  --mx-surface-active: rgba(0, 0, 0, 0.08);
   --mx-surface-border: var(--window-border);
 
   --mx-text-primary: var(--text-primary);
   --mx-text-secondary: var(--text-secondary);
-  --mx-text-tertiary: rgba(232, 232, 237, 0.4);
-  --mx-text-disabled: rgba(232, 232, 237, 0.2);
+  --mx-text-tertiary: rgba(17, 17, 17, 0.5);
+  --mx-text-disabled: rgba(17, 17, 17, 0.3);
 
   /* Accent palette */
-  --mx-accent: var(--accent);
-  --mx-accent-hover: #9f7aea;
-  --mx-accent-glow: rgba(139, 92, 246, 0.2);
-  --mx-accent-subtle: rgba(139, 92, 246, 0.08);
+  --mx-accent: var(--accent-color);
+  --mx-accent-hover: #7c3aed;
+  --mx-accent-glow: rgba(139, 92, 246, 0.15);
+  --mx-accent-subtle: rgba(139, 92, 246, 0.06);
 
   --mx-purple: #8B5CF6;
-  --mx-purple-glow: rgba(139, 92, 246, 0.2);
+  --mx-purple-glow: rgba(139, 92, 246, 0.15);
 
   --mx-green: #10B981;
   --mx-red: #FF6B6B;
@@ -58,16 +69,16 @@
   /* ── Radius ── */
   --mx-radius-sm: 6px;
   --mx-radius-md: 10px;
-  --mx-radius-lg: 14px;
+  --mx-radius-lg: var(--radius-lg);
   --mx-radius-xl: 18px;
   --mx-radius-full: 9999px;
 
-  /* ── Shadows (cached, not animated) ── */
-  --mx-shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
-  --mx-shadow-md: 0 4px 16px rgba(0,0,0,0.5);
-  --mx-shadow-lg: 0 8px 32px rgba(0,0,0,0.6);
-  --mx-shadow-glow: 0 0 20px var(--mx-accent-glow);
-  --mx-shadow-window: 0 8px 40px rgba(0,0,0,0.5), 0 0 1px rgba(255,255,255,0.1);
+  /* ── Shadows ── */
+  --mx-shadow-sm: 0 1px 2px rgba(0,0,0,0.1);
+  --mx-shadow-md: 0 4px 10px rgba(0,0,0,0.1);
+  --mx-shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
+  --mx-shadow-glow: 0 0 12px var(--mx-accent-glow);
+  --mx-shadow-window: var(--shadow-soft);
 
   /* ── Typography ── */
   --mx-font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -116,7 +127,7 @@
   --mx-window-min-h: 240px;
 
   /* ── Dock ── */
-  --mx-dock-h: 56px;
+  --mx-dock-h: var(--dock-height);
   --mx-dock-icon-size: 40px;
   --mx-dock-magnify: 1.35;
   --mx-dock-gap: 6px;
@@ -133,7 +144,7 @@ html[data-perf-tier="1"] {
   --mx-duration-lazy: 200ms;
   --mx-shadow-md: none;
   --mx-shadow-lg: none;
-  --mx-shadow-window: 0 2px 8px rgba(0,0,0,0.5);
+  --mx-shadow-window: var(--shadow-soft);
   --mx-dock-magnify: 1;
 }
 
@@ -141,76 +152,43 @@ html[data-perf-tier="1"] {
 html[data-perf-tier="2"] {
   --mx-duration-smooth: 150ms;
   --mx-duration-slow: 200ms;
-  --mx-shadow-lg: 0 4px 16px rgba(0,0,0,0.5);
-  --mx-shadow-window: 0 4px 20px rgba(0,0,0,0.5);
+  --mx-shadow-lg: none;
+  --mx-shadow-window: var(--shadow-soft);
   --mx-dock-magnify: 1.15;
 }
 
-/* ── Light Mode Token Overrides ── */
-html[data-theme="light"] {
-  --bg-primary: #F8F5EE;
-  --bg-secondary: #F0ede5;
-  --text-primary: #111111;
-  --text-secondary: #3a3a3a;
-  --accent: #8B5CF6;
-  --accent-coral: #FF6B6B;
-  --accent-yellow: #FBBF24;
-  --window-bg: #F0ede5;
-  --window-border: #111111;
-  --dock-bg: rgba(248, 245, 238, 0.95);
-  --shadow-soft: 5px 5px 0px #111111;
-  --glass-opacity: 0.95;
-
-  --mx-bg-tertiary: #E8E5DD;
-  --mx-bg-elevated: #F0ede5;
-
-  --mx-surface: rgba(0, 0, 0, 0.04);
-  --mx-surface-hover: rgba(0, 0, 0, 0.06);
-  --mx-surface-active: rgba(0, 0, 0, 0.08);
-
-  --mx-text-tertiary: rgba(17, 17, 17, 0.5);
-  --mx-text-disabled: rgba(17, 17, 17, 0.3);
-
-  --mx-accent-hover: #7c3aed;
-  --mx-accent-glow: rgba(139, 92, 246, 0.15);
-  --mx-accent-subtle: rgba(139, 92, 246, 0.06);
-
-  --mx-shadow-window: var(--shadow-soft);
-}
-
-/* Enforce adaptive glass colors for Light Mode */
-html[data-theme="light"] .mx-window,
-html[data-theme="light"] .ll-window {
+/* Enforce adaptive glass colors globally */
+.mx-window,
+.ll-window {
   background: var(--window-bg);
-  border: 2px solid var(--window-border);
-  box-shadow: var(--shadow-soft);
+  border: 2px solid var(--window-border) !important;
+  box-shadow: var(--shadow-soft) !important;
 }
 
-html[data-theme="light"] .mx-dock,
-html[data-theme="light"] .ll-dock {
+.mx-dock,
+.ll-dock {
   background: var(--dock-bg);
-  border: 2px solid var(--window-border);
-  box-shadow: 4px 4px 0px var(--window-border);
+  border: 2px solid var(--window-border) !important;
+  box-shadow: 4px 4px 0px var(--window-border) !important;
 }
 
-html[data-theme="light"] .dock-icon {
+.dock-icon {
   background: #F8F5EE;
   border: 2px solid var(--window-border);
   color: #111111;
   box-shadow: 2px 2px 0px var(--window-border);
 }
 
-html[data-theme="light"] .dock-separator {
+.dock-separator {
   background: var(--window-border);
   width: 2px;
 }
 
-html[data-theme="light"] .dock-clock-time {
+.dock-clock-time {
   color: #111111;
   font-weight: 700;
 }
 
-html[data-theme="light"] .dock-clock-date {
+.dock-clock-date {
   color: rgba(17, 17, 17, 0.6);
 }
-

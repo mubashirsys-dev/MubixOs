@@ -185,12 +185,12 @@
   flex: 1;
   display: flex;
   overflow: hidden;
-  background: #0d0c11;
+  background: #F8F5EE;
 }
 
 .editor-gutter {
   width: 40px;
-  background: rgba(10, 9, 14, 0.6);
+  background: #F0EDE5;
   border-right: 2px solid var(--text-primary);
   padding: var(--mx-space-md) 0;
   text-align: right;
@@ -210,7 +210,7 @@
   resize: none;
   outline: none;
   padding: var(--mx-space-md);
-  color: #c9d1d9;
+  color: #111111;
   font-family: var(--mx-font-mono);
   font-size: 12px;
   line-height: 1.5;
@@ -222,7 +222,7 @@
 .editor-terminal {
   height: 120px;
   border-top: 2px solid var(--text-primary);
-  background: #08070b;
+  background: #F0EDE5;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -245,7 +245,7 @@
   font-family: var(--mx-font-mono);
   font-size: 11px;
   overflow-y: auto;
-  color: #a5d6ff;
+  color: #111111;
   line-height: 1.4;
 }
 

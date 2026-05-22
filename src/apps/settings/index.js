@@ -70,13 +70,62 @@ export default class SettingsApp extends MubixApp {
     if (!this.bodyEl) return;
     this.bodyEl.innerHTML = '';
 
-    const themeSelect = h('select', {
+    // ── Transparency Slider ──
+    const transRange = h('input', {
+      type: 'range',
+      min: '0.4',
+      max: '1.0',
+      step: '0.05',
+      class: 'settings-slider',
+      value: settingsService.get('transparency') ?? 0.95,
+      onInput: (e) => {
+        const val = parseFloat(e.target.value);
+        settingsService.set('transparency', val);
+      }
+    });
+
+    // ── Dock Scaling Slider ──
+    const dockRange = h('input', {
+      type: 'range',
+      min: '0.8',
+      max: '1.4',
+      step: '0.1',
+      class: 'settings-slider',
+      value: settingsService.get('dockScale') ?? 1,
+      onInput: (e) => {
+        const val = parseFloat(e.target.value);
+        settingsService.set('dockScale', val);
+      }
+    });
+
+    // ── Desktop Icon Size ──
+    const iconSizeSelect = h('select', {
       class: 'settings-select',
-      onChange: (e) => theme.setTheme(e.target.value)
+      onChange: (e) => settingsService.set('desktopIconSize', e.target.value)
     },
-      h('option', { value: 'dark', selected: theme.current === 'dark' }, 'Futuristic Dark'),
-      h('option', { value: 'light', selected: theme.current === 'light' }, 'Clean Light')
+      h('option', { value: 'small', selected: settingsService.get('desktopIconSize') === 'small' }, 'Small (Compact)'),
+      h('option', { value: 'medium', selected: (settingsService.get('desktopIconSize') || 'medium') === 'medium' }, 'Medium (Default)'),
+      h('option', { value: 'large', selected: settingsService.get('desktopIconSize') === 'large' }, 'Large (Prominent)')
     );
+
+    // ── Battery Saver Checkbox ──
+    const batteryToggle = h('input', {
+      type: 'checkbox',
+      class: 'settings-checkbox',
+      checked: settingsService.get('batterySaver') === true,
+      onChange: (e) => {
+        const val = e.target.checked;
+        settingsService.set('batterySaver', val);
+        if (val) {
+          perf.setTier(1);
+          settingsService.set('animationsIntensity', 'none');
+        } else {
+          perf.setTier(3);
+          settingsService.set('animationsIntensity', 'normal');
+        }
+        this.showGeneral();
+      }
+    });
 
     const perfSelect = h('select', {
       class: 'settings-select',
@@ -90,13 +139,13 @@ export default class SettingsApp extends MubixApp {
     const animSelect = h('select', {
       class: 'settings-select',
       onChange: (e) => {
-        const val = e.target.value === 'true';
-        settingsService.set('animations', val);
-        document.documentElement.setAttribute('data-animations', val);
+        const val = e.target.value;
+        settingsService.set('animationsIntensity', val);
       }
     },
-      h('option', { value: 'true', selected: settingsService.get('animations') === true }, 'Enabled'),
-      h('option', { value: 'false', selected: settingsService.get('animations') === false }, 'Disabled (FPS Boost)')
+      h('option', { value: 'normal', selected: (settingsService.get('animationsIntensity') || 'normal') === 'normal' }, 'Playful (Normal)'),
+      h('option', { value: 'low', selected: settingsService.get('animationsIntensity') === 'low' }, 'Gentle (Low)'),
+      h('option', { value: 'none', selected: settingsService.get('animationsIntensity') === 'none' }, 'Static (No Motion)')
     );
 
     const accentColors = [
@@ -117,25 +166,16 @@ export default class SettingsApp extends MubixApp {
       class: 'settings-select',
       onChange: (e) => settingsService.set('grid_visible', e.target.value === 'true')
     },
-      h('option', { value: 'true', selected: settingsService.get('grid_visible') !== false }, 'Dotted Grid On'),
-      h('option', { value: 'false', selected: settingsService.get('grid_visible') === false }, 'Dotted Grid Off')
-    );
-
-    const motionSelect = h('select', {
-      class: 'settings-select',
-      onChange: (e) => settingsService.set('motion_intensity', e.target.value)
-    },
-      h('option', { value: 'normal', selected: (settingsService.get('motion_intensity') || 'normal') === 'normal' }, 'Playful Drifting'),
-      h('option', { value: 'low', selected: settingsService.get('motion_intensity') === 'low' }, 'Slow Minimal'),
-      h('option', { value: 'static', selected: settingsService.get('motion_intensity') === 'static' }, 'No Drift (FPS Boost)')
+      h('option', { value: 'true', selected: settingsService.get('grid_visible') !== false }, 'Visible'),
+      h('option', { value: 'false', selected: settingsService.get('grid_visible') === false }, 'Hidden')
     );
 
     // Wallpaper Selection Grid
     const presetWallpapers = [
-      { id: 'mubix_brand', name: 'Mubix Premium Brand', path: '/bg.png' },
+      { id: 'mubix_brand', name: 'Premium Brand', path: '/bg.png' },
       { id: 'mesh', name: 'Animated Mesh', path: 'mesh' },
       { id: 'neon_grid', name: 'Neon Grid Vector', path: '/home/Pictures/neon_grid.svg' },
-      { id: 'cyber_sunset', name: 'Cyber Sunset', path: '/home/Pictures/cyber_sunset.svg' },
+      { id: 'cyber_sunset', name: 'Sunset Vector', path: '/home/Pictures/cyber_sunset.svg' },
       { id: 'matrix_os', name: 'Matrix OS Grid', path: '/home/Pictures/matrix_os.svg' }
     ];
 
@@ -157,7 +197,7 @@ export default class SettingsApp extends MubixApp {
 
       const thumbPreview = h('div', { class: 'wallpaper-card-thumb' });
       if (wp.path === 'mesh') {
-        thumbPreview.style.background = 'linear-gradient(135deg, #0a0a0f 0%, #1a1a25 100%)';
+        thumbPreview.style.background = 'linear-gradient(135deg, #F8F5EE 0%, #F0EDE5 100%)';
         const meshIndicator = h('div', {
           style: {
             position: 'absolute',
@@ -233,7 +273,7 @@ export default class SettingsApp extends MubixApp {
     },
       h('div', { class: 'settings-label-group' },
         h('span', { class: 'settings-label' }, 'Desktop Wallpaper'),
-        h('span', { class: 'settings-desc' }, 'Select a dynamic backdrop vector preset or upload a custom image.')
+        h('span', { class: 'settings-desc' }, 'Select a premium vector backdrop preset or upload custom images.')
       ),
       pickerContainer,
       uploadBtn,
@@ -241,48 +281,63 @@ export default class SettingsApp extends MubixApp {
     );
 
     const sections = [
-      h('div', { class: 'settings-section-title' }, 'System Appearance'),
-      h('div', { class: 'settings-row' },
-        h('div', { class: 'settings-label-group' },
-          h('span', { class: 'settings-label' }, 'Interface Theme'),
-          h('span', { class: 'settings-desc' }, 'Switch system coloring mode instantly.')
-        ),
-        themeSelect
-      ),
+      h('div', { class: 'settings-section-title' }, 'Personalization & Layout'),
       h('div', { class: 'settings-row' },
         h('div', { class: 'settings-label-group' },
           h('span', { class: 'settings-label' }, 'Branding Accent Color'),
-          h('span', { class: 'settings-desc' }, 'Choose your primary system highlight accent color.')
+          h('span', { class: 'settings-desc' }, 'Choose primary accent highlight color.')
         ),
         accentSelect
       ),
       h('div', { class: 'settings-row' },
         h('div', { class: 'settings-label-group' },
-          h('span', { class: 'settings-label' }, 'Dotted Grid Layer'),
-          h('span', { class: 'settings-desc' }, 'Toggle the background tech dotted pattern visibility.')
+          h('span', { class: 'settings-label' }, 'Interface Transparency'),
+          h('span', { class: 'settings-desc' }, 'Control acrylic surface window glass opacity level.')
+        ),
+        transRange
+      ),
+      h('div', { class: 'settings-row' },
+        h('div', { class: 'settings-label-group' },
+          h('span', { class: 'settings-label' }, 'Dock Magnification Scale'),
+          h('span', { class: 'settings-desc' }, 'Resize system Dock panel bar size.')
+        ),
+        dockRange
+      ),
+      h('div', { class: 'settings-row' },
+        h('div', { class: 'settings-label-group' },
+          h('span', { class: 'settings-label' }, 'Desktop Icon Size'),
+          h('span', { class: 'settings-desc' }, 'Configure grid layout size of icons.')
+        ),
+        iconSizeSelect
+      ),
+      h('div', { class: 'settings-row' },
+        h('div', { class: 'settings-label-group' },
+          h('span', { class: 'settings-label' }, 'Dotted Backdrop Grid'),
+          h('span', { class: 'settings-desc' }, 'Toggle dotted tech pattern presence.')
         ),
         gridSelect
       ),
+      wallpaperRow,
+
+      h('div', { class: 'settings-section-title' }, 'Performance & Motion'),
       h('div', { class: 'settings-row' },
         h('div', { class: 'settings-label-group' },
-          h('span', { class: 'settings-label' }, 'Motion Intensity Drift'),
-          h('span', { class: 'settings-desc' }, 'Choose the animation speed for background floating shapes.')
-        ),
-        motionSelect
-      ),
-      h('div', { class: 'settings-row' },
-        h('div', { class: 'settings-label-group' },
-          h('span', { class: 'settings-label' }, 'Window Animations'),
-          h('span', { class: 'settings-desc' }, 'Disable to speed up slow CPUs.')
+          h('span', { class: 'settings-label' }, 'Animations Intensity'),
+          h('span', { class: 'settings-desc' }, 'Adjust speed scale of visual micro-animations.')
         ),
         animSelect
       ),
-      wallpaperRow,
-      h('div', { class: 'settings-section-title' }, 'Performance Manager'),
       h('div', { class: 'settings-row' },
         h('div', { class: 'settings-label-group' },
-          h('span', { class: 'settings-label' }, 'Graphics & Render Tier'),
-          h('span', { class: 'settings-desc' }, 'Low-end laptops perform best on Battery Saver tier.')
+          h('span', { class: 'settings-label' }, 'Battery Saver Mode'),
+          h('span', { class: 'settings-desc' }, 'Enforces Tier 1 rendering to reduce CPU load.')
+        ),
+        batteryToggle
+      ),
+      h('div', { class: 'settings-row' },
+        h('div', { class: 'settings-label-group' },
+          h('span', { class: 'settings-label' }, 'Hardware Graphics Tier'),
+          h('span', { class: 'settings-desc' }, 'Current performance profiling level.')
         ),
         perfSelect
       ),

@@ -149,3 +149,40 @@
   color: var(--mx-text-tertiary);
   letter-spacing: 0.02em;
 }
+
+/* ── Dock Battery Widget ── */
+.dock-battery {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 var(--mx-space-sm);
+  cursor: default;
+  align-self: center;
+  font-family: var(--mx-font-sans);
+}
+
+.dock-battery .battery-icon {
+  font-size: 14px;
+  line-height: 1.2;
+  transition: transform var(--mx-duration-fast);
+}
+
+.dock-battery .battery-level {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.dock-battery.low-battery .battery-level {
+  color: var(--mx-red);
+  animation: pulse-low-battery 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-low-battery {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.dock-battery.charging .battery-level {
+  color: var(--mx-green);
+}

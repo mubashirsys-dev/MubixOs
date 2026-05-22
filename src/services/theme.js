@@ -7,15 +7,15 @@ import settings from '@services/settings.js';
 
 class ThemeService {
   constructor() {
-    this._current = 'dark';
+    this._current = 'light';
   }
 
   async init() {
-    this._current = settings.get('theme') || 'dark';
+    this._current = 'light';
     this._apply();
 
-    bus.on('settings:changed:theme', (theme) => {
-      this._current = theme;
+    bus.on('settings:changed:theme', () => {
+      this._current = 'light';
       this._apply();
     });
 
@@ -34,7 +34,7 @@ class ThemeService {
   }
 
   _apply() {
-    document.documentElement.setAttribute('data-theme', this._current);
+    document.documentElement.setAttribute('data-theme', 'light');
     
     // Apply dynamic visual system parameters
     this._applyAccent(settings.get('accent_color') || '#8B5CF6');
@@ -44,6 +44,7 @@ class ThemeService {
 
   _applyAccent(color) {
     document.documentElement.style.setProperty('--accent', color);
+    document.documentElement.style.setProperty('--accent-color', color);
     try {
       const r = parseInt(color.slice(1,3), 16) || 139;
       const g = parseInt(color.slice(3,5), 16) || 92;
@@ -63,16 +64,16 @@ class ThemeService {
     document.documentElement.setAttribute('data-motion-scale', scale);
   }
 
-  get current() { return this._current; }
+  get current() { return 'light'; }
 
   async setTheme(theme) {
-    await settings.set('theme', theme);
-    this._current = theme;
+    await settings.set('theme', 'light');
+    this._current = 'light';
     this._apply();
   }
 
   toggle() {
-    return this.setTheme(this._current === 'dark' ? 'light' : 'dark');
+    return this.setTheme('light');
   }
 }
 

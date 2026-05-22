@@ -80,11 +80,10 @@ function setupDrag(win, titlebar, id, data, wm) {
   let origY = 0;
   let currentX = 0;
   let currentY = 0;
-  let activePointerId = null;
   let rafId = null;
 
   const onPointerMove = (e) => {
-    if (!dragging || e.pointerId !== activePointerId) return;
+    if (!dragging) return;
 
     const winData = wm.windows.get(id);
     if (!winData) return;
@@ -139,28 +138,22 @@ function setupDrag(win, titlebar, id, data, wm) {
   };
 
   const endDrag = (e) => {
-    if (!dragging || e.pointerId !== activePointerId) return;
+    if (!dragging) return;
     dragging = false;
-    activePointerId = null;
 
     if (rafId) {
       cancelAnimationFrame(rafId);
       rafId = null;
     }
 
-    // Release pointer capture
-    try {
-      titlebar.releasePointerCapture(e.pointerId);
-    } catch (err) {}
-
-    // Unbind listeners from titlebar
-    titlebar.removeEventListener('pointermove', onPointerMove);
-    titlebar.removeEventListener('pointerup', endDrag);
-    titlebar.removeEventListener('pointercancel', endDrag);
-    titlebar.removeEventListener('lostpointercapture', endDrag);
+    // Unbind listeners from window
+    window.removeEventListener('pointermove', onPointerMove);
+    window.removeEventListener('pointerup', endDrag);
+    window.removeEventListener('pointercancel', endDrag);
 
     win.style.transition = '';
     win.classList.remove('dragging');
+    document.body.classList.remove('dragging');
     document.body.style.userSelect = '';
     document.body.style.webkitUserSelect = '';
     wm.hideSnapPreview();
@@ -191,7 +184,6 @@ function setupDrag(win, titlebar, id, data, wm) {
     wm.focus(id);
 
     dragging = true;
-    activePointerId = e.pointerId;
     startX = e.clientX;
     startY = e.clientY;
 
@@ -226,17 +218,14 @@ function setupDrag(win, titlebar, id, data, wm) {
 
     win.style.transition = 'none';
     win.classList.add('dragging');
+    document.body.classList.add('dragging');
     document.body.style.userSelect = 'none';
     document.body.style.webkitUserSelect = 'none';
 
-    // Set pointer capture to capture move events even over iframes
-    titlebar.setPointerCapture(e.pointerId);
-
-    // Bind event listeners directly on the capturing titlebar element
-    titlebar.addEventListener('pointermove', onPointerMove);
-    titlebar.addEventListener('pointerup', endDrag);
-    titlebar.addEventListener('pointercancel', endDrag);
-    titlebar.addEventListener('lostpointercapture', endDrag);
+    // Bind event listeners globally to window
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('pointerup', endDrag);
+    window.addEventListener('pointercancel', endDrag);
   });
 }
 

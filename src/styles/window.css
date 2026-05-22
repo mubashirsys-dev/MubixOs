@@ -218,3 +218,8 @@
 #snap-preview.visible {
   opacity: 1;
 }
+
+/* Block iframe interaction during dragging */
+body.dragging iframe, body.resizing iframe {
+  pointer-events: none !important;
+}

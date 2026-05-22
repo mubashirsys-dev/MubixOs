@@ -14,6 +14,7 @@ class Dock {
     this._el = null;
     this._dockEl = null;
     this._clockEl = null;
+    this._batteryEl = null;
     this._clockInterval = null;
   }
 
@@ -36,6 +37,12 @@ class Dock {
       h('span', { class: 'dock-clock-date', id: 'dock-date' })
     );
 
+    // Battery widget
+    this._batteryEl = h('div', { class: 'dock-battery', id: 'dock-battery' },
+      h('span', { class: 'battery-icon' }, '🔋'),
+      h('span', { class: 'battery-level', id: 'dock-battery-percent' }, '100%')
+    );
+
     // Launcher button
     const launcherBtn = this._createDockItem({
       id: '__launcher',
@@ -49,6 +56,8 @@ class Dock {
       h('div', { class: 'dock-separator' }),
       ...items,
       sep,
+      this._batteryEl,
+      h('div', { class: 'dock-separator' }),
       this._clockEl
     );
 
@@ -63,8 +72,55 @@ class Dock {
     this._updateClock();
     this._clockInterval = setInterval(() => this._updateClock(), 30000);
 
+    // Battery init
+    this._initBattery();
+
     // Listen for dock updates
     bus.on('dock:update', () => this._updateRunningIndicators());
+  }
+
+  async _initBattery() {
+    if (!navigator.getBattery) {
+      if (this._batteryEl) this._batteryEl.style.display = 'none';
+      return;
+    }
+    try {
+      const battery = await navigator.getBattery();
+      const updateBattery = () => {
+        const pct = Math.round(battery.level * 100);
+        const isCharging = battery.charging;
+        const percentEl = $('#dock-battery-percent');
+        const iconEl = this._batteryEl?.querySelector('.battery-icon');
+        
+        if (percentEl) percentEl.textContent = `${pct}%`;
+        
+        if (isCharging) {
+          if (iconEl) iconEl.textContent = '⚡';
+          this._batteryEl.classList.add('charging');
+          this._batteryEl.classList.remove('low-battery');
+        } else {
+          if (iconEl) iconEl.textContent = pct <= 20 ? '🪫' : '🔋';
+          this._batteryEl.classList.remove('charging');
+          if (pct <= 20) {
+            this._batteryEl.classList.add('low-battery');
+            bus.emit('notification:show', {
+              title: 'Low Battery Alert',
+              message: `System battery level at ${pct}%. Connect charger.`,
+              icon: '🪫',
+              duration: 5000
+            });
+          } else {
+            this._batteryEl.classList.remove('low-battery');
+          }
+        }
+      };
+      
+      battery.addEventListener('levelchange', updateBattery);
+      battery.addEventListener('chargingchange', updateBattery);
+      updateBattery();
+    } catch(err) {
+      console.warn('Battery status not accessible:', err);
+    }
   }
 
   _createDockItem(config, isLauncher = false) {
